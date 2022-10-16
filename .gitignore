@@ -1,6 +1,6 @@
 *tailwind.scss
-/dist
-/build
+*/dist
+*/build
 # Logs
 logs
 *.log

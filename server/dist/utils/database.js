@@ -13,17 +13,31 @@ class Database {
         this.default_path = `${__dirname.replace(path_1.default.basename(__dirname), "")}/database.json`;
         this.file_path = this.default_path;
         this.data = {};
+        this.delete = (table, value, callback) => {
+            if (this.data[table] && this.data[table][value]) {
+                delete this.data[table][value];
+                this.___save__();
+                callback();
+            }
+        };
         this.file_path = file_path || this.default_path;
         this.__init__();
-        console.log(this.file_path);
     }
     get(table, value) {
         return this.data[table][value];
     }
-    set(table, value, data, cb) {
-        this.data[table][value] = data;
+    getAll(table) {
+        return this.data[table];
     }
-    save() {
+    set(table, value, data, callback) {
+        if (this.data[table] == null) {
+            this.data[table] = {};
+        }
+        this.data[table][value] = data;
+        this.___save__();
+        callback();
+    }
+    ___save__() {
         fs_1.default.writeFileSync(this.file_path, JSON.stringify(this.data));
     }
     __init__() {
