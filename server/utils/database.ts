@@ -6,10 +6,8 @@ import fs from "fs";
 import path from "path";
 
 class Database {
-  private default_path = `${__dirname.replace(
-    path.basename(__dirname),
-    ""
-  )}/database.json`;
+  private __root = __dirname.replace(path.basename(__dirname), "");
+  private default_path = `${this.__root}/database.json`;
 
   constructor(file_path?: string) {
     this.file_path = file_path || this.default_path;
@@ -35,6 +33,41 @@ class Database {
     return this.data[table];
   }
 
+  public getByKey(table: string, key: string, value: string) {
+    const table_data = this.data[table] || {};
+    const keys = Object.keys(table_data) || [];
+
+    for (let x = 0; x < keys.length; x++) {
+      const key_ = keys[x];
+
+      if (table_data[key_][key] === value) {
+        return table_data[key_];
+      }
+    }
+  }
+
+  public setByKey(
+    table: string,
+    key: string,
+    value: any,
+    data: any,
+    callback: Function
+  ) {
+    const table_data = this.data[table] || {};
+    const keys = Object.keys(table_data) || [];
+
+    for (let x = 0; x < keys.length; x++) {
+      const key_ = keys[x];
+
+      if (table_data[key_][key] === value) {
+        this.data[table][key_] = data;
+      }
+    }
+
+    this.___save__();
+    callback();
+  }
+
   public set(table: string, value: string, data: any, callback: Function) {
     if (this.data[table] == null) {
       this.data[table] = {};
@@ -54,7 +87,23 @@ class Database {
     if (!fs.existsSync(this.file_path)) {
       fs.writeFileSync(this.file_path, "{}");
     }
-    this.data = JSON.parse(fs.readFileSync(this.file_path).toString());
+
+    const stringy = fs.readFileSync(this.file_path).toString();
+
+    try {
+      this.data = JSON.parse(stringy);
+    } catch {
+      const backup_name = `broken_${new Date().toISOString()}.json`;
+      const backup_path = `${this.__root}/${backup_name}`;
+
+      fs.appendFile(backup_path, stringy, function () {
+        console.log(
+          `Database file is broken, created a backup at ${backup_path}.`
+        );
+      });
+
+      this.data = {};
+    }
   }
 }
 

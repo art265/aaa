@@ -10,7 +10,8 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 class Database {
     constructor(file_path) {
-        this.default_path = `${__dirname.replace(path_1.default.basename(__dirname), "")}/database.json`;
+        this.__root = __dirname.replace(path_1.default.basename(__dirname), "");
+        this.default_path = `${this.__root}/database.json`;
         this.file_path = this.default_path;
         this.data = {};
         this.delete = (table, value, callback) => {
@@ -29,6 +30,28 @@ class Database {
     getAll(table) {
         return this.data[table];
     }
+    getByKey(table, key, value) {
+        const table_data = this.data[table] || {};
+        const keys = Object.keys(table_data) || [];
+        for (let x = 0; x < keys.length; x++) {
+            const key_ = keys[x];
+            if (table_data[key_][key] === value) {
+                return table_data[key_];
+            }
+        }
+    }
+    setByKey(table, key, value, data, callback) {
+        const table_data = this.data[table] || {};
+        const keys = Object.keys(table_data) || [];
+        for (let x = 0; x < keys.length; x++) {
+            const key_ = keys[x];
+            if (table_data[key_][key] === value) {
+                this.data[table][key_] = data;
+            }
+        }
+        this.___save__();
+        callback();
+    }
     set(table, value, data, callback) {
         if (this.data[table] == null) {
             this.data[table] = {};
@@ -44,7 +67,18 @@ class Database {
         if (!fs_1.default.existsSync(this.file_path)) {
             fs_1.default.writeFileSync(this.file_path, "{}");
         }
-        this.data = JSON.parse(fs_1.default.readFileSync(this.file_path).toString());
+        const stringy = fs_1.default.readFileSync(this.file_path).toString();
+        try {
+            this.data = JSON.parse(stringy);
+        }
+        catch (_a) {
+            const backup_name = `broken_${new Date().toISOString()}.json`;
+            const backup_path = `${this.__root}/${backup_name}`;
+            fs_1.default.appendFile(backup_path, stringy, function () {
+                console.log(`Database file is broken, created a backup at ${backup_path}.`);
+            });
+            this.data = {};
+        }
     }
 }
 exports.default = Database;

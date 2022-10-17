@@ -9,7 +9,7 @@ const Router = require("express")();
 const DB = new Database();
 
 Router.get("/create", (req: AnyMap, res: AnyMap) => {
-  const { username, email, password, is_admin } = req.body;
+  const { username, email, password, is_admin, bot_creation_limit } = req.body;
   const id = uuid();
 
   DB.set(
@@ -18,6 +18,7 @@ Router.get("/create", (req: AnyMap, res: AnyMap) => {
     {
       username,
       email,
+      bot_creation_limit,
       password: Sha256.hash(password),
       isAdmin: is_admin,
     },
@@ -47,6 +48,7 @@ Router.get("/delete", (req: AnyMap, res: AnyMap) => {
 
     for (let x = 0; x < instances.length; x++) {
       const ins = instances[x];
+
       if (ins.owner === user_id) {
         DB.delete("instances", ins.id, function () {});
       }
