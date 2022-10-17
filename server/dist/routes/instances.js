@@ -22,6 +22,13 @@ Router.get("/:uuid", (req, res) => {
     const { uuid } = req.params;
     res.json({ Success: true, Data: DB.get("instances", uuid) });
 });
+Router.get("/by/:owner", (req, res) => {
+    const { owner } = req.params;
+    res.json({
+        Success: true,
+        Data: DB.getMultiByKey("instances", "owner", owner),
+    });
+});
 Router.post("/create", (req, res) => {
     const { name, app_type, target_file } = req.body;
     const id = (0, uuid_1.uuid)();

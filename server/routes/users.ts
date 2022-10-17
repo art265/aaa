@@ -10,17 +10,30 @@ const DB = new Database();
 
 Router.get("/create", (req: AnyMap, res: AnyMap) => {
   const { username, email, password, is_admin, bot_creation_limit } = req.body;
+  const { token } = req.headers;
   const id = uuid();
+
+  const creator = DB.getByKey("users", "token", token);
+
+  if (creator == null) {
+    return res.status(401).json({ Success: false, Message: "Invalid token." });
+  }
+
+  if (creator.isAdmin == false) {
+    return res
+      .status(403)
+      .json({ Success: false, Message: "Insufficient permissions." });
+  }
 
   DB.set(
     "users",
     id,
     {
-      username,
       email,
+      username,
       bot_creation_limit,
-      password: Sha256.hash(password),
       isAdmin: is_admin,
+      password: Sha256.hash(password),
     },
     function () {
       res.json({

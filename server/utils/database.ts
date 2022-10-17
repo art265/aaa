@@ -26,7 +26,7 @@ class Database {
   };
 
   public get(table: string, value: string) {
-    return this.data[table][value];
+    return (this.data[table] || {})[value];
   }
 
   public getAll(table: string) {
@@ -44,6 +44,22 @@ class Database {
         return table_data[key_];
       }
     }
+  }
+
+  public getMultiByKey(table: string, key: string, value: string) {
+    const table_data = this.data[table] || {};
+    const keys = Object.keys(table_data) || [];
+    const final = [];
+
+    for (let x = 0; x < keys.length; x++) {
+      const key_ = keys[x];
+
+      if (table_data[key_][key] === value) {
+        final.push(table_data[key_]);
+      }
+    }
+
+    return final;
   }
 
   public setByKey(

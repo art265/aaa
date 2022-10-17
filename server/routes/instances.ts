@@ -21,6 +21,14 @@ Router.get("/:uuid", (req: AnyMap, res: AnyMap) => {
   res.json({ Success: true, Data: DB.get("instances", uuid) });
 });
 
+Router.get("/by/:owner", (req: AnyMap, res: AnyMap) => {
+  const { owner } = req.params;
+  res.json({
+    Success: true,
+    Data: DB.getMultiByKey("instances", "owner", owner),
+  });
+});
+
 Router.post("/create", (req: AnyMap, res: AnyMap) => {
   const { name, app_type, target_file } = req.body;
   const id = uuid();
