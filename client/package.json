@@ -5,7 +5,7 @@
     "build": "vite build && npm run build-css",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "css": "npx tailwindcss -i ./src/assets/scss/build.scss -o ./src/assets/scss/tailwinds.scss --watch --minify",
-    "build-css": "npx tailwindcss -i ./src/assets/scss/build.scss -o ./src/assets/scss/tailwinds.css --minify"
+    "build-css": "npx tailwindcss -i ./src/assets/scss/build.scss -o ./src/assets/scss/tailwinds.scss --minify"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",

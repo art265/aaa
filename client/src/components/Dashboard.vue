@@ -3,7 +3,6 @@ import { Chart, registerables } from "chart.js";
 
 import utils from "@/assets/js/utils";
 import Stats from "@/components/Stats.vue";
-import IPLog from "@/components/IPLogs.vue";
 import NewChart from "@/components/NewChart.vue";
 
 Chart.register(...registerables);
@@ -22,7 +21,7 @@ let greenborder = utils.hexToRgb(`${Colors["steel"]}`, 1);
 let border = utils.hexToRgb(`${themeColor}`, 1);
 
 export default {
-  components: { IPLog, Stats, NewChart },
+  components: { Stats, NewChart },
   data() {
     return {
       localStorage: localStorage,
