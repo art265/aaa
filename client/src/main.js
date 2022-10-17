@@ -4,6 +4,7 @@ import router from "./router";
 import utils from "@/assets/js/utils";
 
 const app = createApp(App);
+
 app.use(router);
 app.mount("#app");
 

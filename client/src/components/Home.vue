@@ -6,16 +6,16 @@ export default {
     return {
       instances: [
         {
-          Name: "Discord Bot",
           Description: "A discord bot that can do many things",
-          Type: "Node",
+          Name: "Discord Bot",
           Active: true,
+          Type: "Node",
         },
         {
-          Name: "Py Bot",
           Description: "AI powered discord bot",
-          Type: "Python",
+          Name: "Py Bot",
           Active: true,
+          Type: "Python",
         },
       ],
     };

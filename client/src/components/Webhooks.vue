@@ -1,11 +1,13 @@
 <script>
 import Box from "@/components/WebhookBox.vue";
+import CreateWebhook from "@/components/screen/CreateWebhook.vue";
 
 export default {
-  components: { Box },
+  components: { Box, CreateWebhook },
   data() {
     return {
       localStorage: localStorage,
+      VisibleDisplay: false,
     };
   },
 };
@@ -19,10 +21,25 @@ export default {
           <h2 class="text-xl font-semibold">Discord Webhooks</h2>
           <div>
             <button
+              v-on:click="
+                () => {
+                  VisibleDisplay = true;
+                }
+              "
               :class="`rounded-lg float-right w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
             >
               Create
             </button>
+            <div>
+              <CreateWebhook
+                :Visible="VisibleDisplay"
+                :onCrossed="
+                  () => {
+                    VisibleDisplay = false;
+                  }
+                "
+              ></CreateWebhook>
+            </div>
           </div>
         </div>
         <section class="space-y-3">
