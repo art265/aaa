@@ -85,7 +85,7 @@ class Database {
         }
         catch (_a) {
             const backup_name = `broken_${new Date().toISOString()}.json`;
-            const backup_path = `${this.__root}/${backup_name}`;
+            const backup_path = `${this.__root}${backup_name}`;
             fs_1.default.appendFile(backup_path, stringy, function () {
                 console.log(`Database file is broken, created a backup at ${backup_path}.`);
             });

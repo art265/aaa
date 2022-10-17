@@ -50,7 +50,7 @@ export default {
                 Delete
               </button>
               <button
-                :class="`bg-emerald ml-2  bg-opacity-50 float-right px-3 text-xs py-1 rounded border-emerald border`"
+                :class="`bg-blue ml-2  bg-opacity-50 float-right px-3 text-xs py-1 rounded border-blue border`"
               >
                 Test
               </button>

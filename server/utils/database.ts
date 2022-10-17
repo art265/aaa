@@ -110,7 +110,7 @@ class Database {
       this.data = JSON.parse(stringy);
     } catch {
       const backup_name = `broken_${new Date().toISOString()}.json`;
-      const backup_path = `${this.__root}/${backup_name}`;
+      const backup_path = `${this.__root}${backup_name}`;
 
       fs.appendFile(backup_path, stringy, function () {
         console.log(

@@ -2,27 +2,26 @@
 
 /* width */
 ::-webkit-scrollbar {
-    width: 7px;
+  width: 7px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #24222e;
+  background: #24222e;
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .height-half-important {
-    height: 50% !important;
+  height: 50% !important;
 }
 
-
 *:focus {
-    outline: none;
+  outline: none;
 }
 
 img {
-    filter: grayscale(0);
+  filter: grayscale(0);
 }

@@ -1,9 +1,12 @@
-# Suggest-a-name
+# Centauri
 
-Continuing the legacy of [Discord-bot-panel](https://github.com/jareer12/Discord-Bot-Dashboard)
+**Centauri** is a self-hosted dashboard web panel that allows you to create, manage and host your Python & Node.js applications from a web panel.
 
 ## Features
 
+- Bot creation limit.
+- No external databases required.
 - Create/delete user accounts.
 - Python support alongside Node.js
-- Bot creation limit.
+- Customizable panel.
+- Discord webhooks.

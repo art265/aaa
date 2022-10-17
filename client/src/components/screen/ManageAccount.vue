@@ -89,17 +89,17 @@ export default {
             </div>
           </div>
         </div>
-        <div class="grid-cols-4 grid gap-5 px-6 mt-3 items-center">
-          <div :class="`col-span-3`">
-            <label for="">Email</label>
+        <div class="grid-cols-5 grid gap-3 px-6 mt-3 items-center">
+          <div :class="`col-span-4`">
+            <label for="">Bot Limit</label>
             <input
-              type="email"
-              placeholder="johndoe@gmail.com"
+              type="number"
+              placeholder="10"
               :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
             />
           </div>
 
-          <div :class="`text-gray-300`">
+          <div :class="`text-gray-300 col-span-1`">
             <label for="">Admin</label>
             <ToggleButton
               :On="IsAdmin"
@@ -116,13 +116,13 @@ export default {
           <button
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
           >
-            Finalize
+            Save
           </button>
           <button
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-8 py-3 bg-steel-300`"
             v-on:click="onCrossed"
           >
-            Never mind
+            Close
           </button>
         </div>
         <div class="py-3"></div>
