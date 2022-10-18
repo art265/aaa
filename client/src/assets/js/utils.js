@@ -63,9 +63,10 @@ class Utils {
     return data;
   }
 
-  setDefaultTheme() {
+  setDefaultTheme(theme) {
     if (localStorage.theme == null) {
-      localStorage.theme = "purp";
+      localStorage.theme = theme;
+      window.location.reload();
     }
   }
 

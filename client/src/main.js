@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import utils from "@/assets/js/utils";
+import utils from "./assets/js/utils";
 
 const app = createApp(App);
 
@@ -9,7 +9,7 @@ app.use(router);
 app.mount("#app");
 
 utils.loadThemeScrollBar();
-utils.setDefaultTheme("purp");
+utils.setDefaultTheme("blue");
 
 utils.appendJs([
   `https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js`,
