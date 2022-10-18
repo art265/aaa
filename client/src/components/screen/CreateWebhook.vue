@@ -56,10 +56,10 @@ export default {
         </div>
 
         <div class="px-6 mt-3 text-gray-300 text-sm">
-          <p class="text-base leading-relaxed">Discord Webhook</p>
+          <p class="text-sm leading-relaxed text-gray-400">Discord Webhook</p>
           <input
             type="text"
-            placeholder="https://discord.com/api/webhooks/..."
+            placeholder="https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxx"
             :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
           />
         </div>

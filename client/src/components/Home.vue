@@ -1,24 +1,33 @@
 <script>
 import Target from "@/components/TargetBox.vue";
+import Config from "../config";
+
 export default {
   components: { Target },
+
   data() {
     return {
-      instances: [
-        {
-          Description: "A discord bot that can do many things",
-          Name: "Discord Bot",
-          Active: true,
-          Type: "Node",
-        },
-        {
-          Description: "AI powered discord bot",
-          Name: "Py Bot",
-          Active: true,
-          Type: "Python",
-        },
-      ],
+      instances: [],
     };
+  },
+
+  mounted() {
+    // Fetch Json
+    fetch(`${Config.server}/instances/by/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.instances = data.Data || [];
+        console.log(this.instances);
+      })
+      .catch((err) => {
+        throw err;
+      });
   },
 };
 </script>
@@ -33,10 +42,11 @@ export default {
             <Target
               v-for="instance in instances"
               :key="instance"
-              :Name="instance.Name"
-              :Type="instance.Type"
-              :Active="instance.Active"
-              :Description="instance.Description"
+              :Name="instance.name"
+              :Type="instance.app_type"
+              :Active="instance.active"
+              :Description="instance.description"
+              :onClickLocation="`/instance/${instance.id}`"
             />
           </section>
         </section>

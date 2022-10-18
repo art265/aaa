@@ -6,7 +6,7 @@
 
 ## Features
 
-- Bot creation limit.
+- Bot creation limit option.
 - No external databases required.
 - Create/delete user accounts.
 - Python support alongside Node.js

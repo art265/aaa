@@ -1,15 +1,30 @@
 <script>
 import Node from "../assets/imgs/node.png";
 import Python from "../assets/imgs/python.png";
+import { RouterLink } from "vue-router";
 
 export default {
   components: { Python, Node },
+  methods: {},
+
   props: {
-    Name: String,
-    Active: Boolean,
-    Description: String,
+    Name: {
+      type: String,
+      required: true,
+    },
+
+    Description: {
+      type: String,
+    },
+
+    onClickLocation: {
+      type: String,
+      required: true,
+    },
+
     Type: "Node" | "Python",
   },
+
   data() {
     return {
       Image:
@@ -20,12 +35,12 @@ export default {
           : null,
     };
   },
-  methods: {},
 };
 </script>
 
 <template>
-  <section
+  <router-link
+    :to="onClickLocation"
     class="w-full rounded-lg bg-gradient-to-b from-steel-300 to-steel-400 bg-pos-0 hover:bg-pos-100 duration-500 bg-size-200 transition-all p-5"
   >
     <section>
@@ -45,5 +60,5 @@ export default {
         </div>
       </div>
     </section>
-  </section>
+  </router-link>
 </template>

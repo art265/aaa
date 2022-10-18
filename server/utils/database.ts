@@ -26,7 +26,10 @@ class Database {
   };
 
   public get(table: string, value: string) {
-    return (this.data[table] || {})[value];
+    return {
+      id: value,
+      ...(this.data[table] || {})[value],
+    };
   }
 
   public getAll(table: string) {
@@ -58,7 +61,10 @@ class Database {
       const key_ = keys[x];
 
       if (table_data[key_][key] === value) {
-        final.push(table_data[key_]);
+        final.push({
+          id: key_,
+          ...table_data[key_],
+        });
       }
     }
 
