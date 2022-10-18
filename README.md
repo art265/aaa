@@ -10,5 +10,5 @@
 - No external databases required.
 - Create/delete user accounts.
 - Python support alongside Node.js
-- Customizable panel.
+- Customizable panel(9 themes).
 - Discord webhooks.
