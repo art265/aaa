@@ -21,17 +21,40 @@ Router.get("/:uuid", (req: AnyMap, res: AnyMap) => {
   res.json({ Success: true, Data: DB.get("instances", uuid) });
 });
 
-Router.get("/by/:owner", (req: AnyMap, res: AnyMap) => {
-  const { owner } = req.params;
+Router.use("*", (req: AnyMap, res: AnyMap, next: Function) => {
+  const { token } = req.headers;
+  const user = DB.getByKey("users", "token", token);
+
+  if (user == null) {
+    return res.status(401).json({ Success: false, Message: "Unauthorized" });
+  }
+
+  req.user = user;
+  next();
+});
+
+Router.get("/by/me", (req: AnyMap, res: AnyMap) => {
+  const { token } = req.headers;
+
+  if (token == null) {
+    return res.status(401).json({ Success: false, Message: "Unauthorized" });
+  }
+
   res.json({
     Success: true,
-    Data: DB.getMultiByKey("instances", "owner", owner),
+    Data: DB.getMultiByKey("instances", "owner", req.user.id),
   });
 });
 
 Router.post("/create", (req: AnyMap, res: AnyMap) => {
   const { name, app_type, target_file } = req.body;
   const id = uuid();
+
+  if (name == null || app_type == null || target_file == null) {
+    return res
+      .status(400)
+      .json({ Success: false, Message: "Please fill in all the fields" });
+  }
 
   DB.set(
     "instances",
@@ -40,6 +63,7 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
       name,
       app_type,
       target_file,
+      owner: req.user.id,
     },
     function () {
       res.json({

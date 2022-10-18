@@ -4,6 +4,7 @@ import { AnyMap } from "../types";
 import Sha256 from "../utils/sha256";
 import { uuid } from "../utils/uuid";
 import Database from "../utils/database";
+import { GenerateToken } from "../utils/token";
 
 const Router = require("express")();
 const DB = new Database();
@@ -33,6 +34,7 @@ Router.get("/create", (req: AnyMap, res: AnyMap) => {
       username,
       bot_creation_limit,
       isAdmin: is_admin,
+      token: GenerateToken(256),
       password: Sha256.hash(password),
     },
     function () {

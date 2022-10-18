@@ -41,7 +41,10 @@ class Database {
       const key_ = keys[x];
 
       if (table_data[key_][key] === value) {
-        return table_data[key_];
+        return {
+          id: key_,
+          ...table_data[key_],
+        };
       }
     }
   }
