@@ -2,6 +2,7 @@ import ToDo from "../views/Webhooks.vue";
 import HomeView from "../views/Home.vue";
 import Dash from "../views/Dashboard.vue";
 import Accounts from "../views/Accounts.vue";
+import Instance from "../views/Instance.vue";
 import Customize from "../views/Customize.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
@@ -28,6 +29,10 @@ const router = createRouter({
     {
       path: "/settings/accounts",
       component: Accounts,
+    },
+    {
+      path: "/instance/:id",
+      component: Instance,
     },
   ],
 });
