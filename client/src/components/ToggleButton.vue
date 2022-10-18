@@ -5,15 +5,18 @@ export default {
       type: Boolean,
       default: false,
     },
+
     ClassName: {
       type: String,
       default: "",
     },
+
     onClicked: {
       type: Function,
       required: true,
     },
   },
+
   data() {
     return {
       localStorage: localStorage,

@@ -3,6 +3,7 @@
 // License: MIT
 
 import fs from "fs";
+import "dotenv/config";
 import path from "path";
 
 class Database {
@@ -81,10 +82,7 @@ class Database {
     for (let x = 0; x < keys.length; x++) {
       const key_ = keys[x];
 
-      if (table_data[key_][key] === value) {
-        this.data[table][key_] = data;
-        console.log(this.data[table][key_]);
-      }
+      if (table_data[key_][key] === value) this.data[table][key_] = data;
     }
 
     this.___save__();
@@ -92,16 +90,11 @@ class Database {
   }
 
   public set(table: string, value: string, data: any, callback: Function) {
-    console.log("set");
-    if (this.data[table] == null) {
-      this.data[table] = {};
-    }
+    if (this.data[table] == null) this.data[table] = {};
 
-    console.log(this.data);
     this.data[table][value] = data;
     this.___save__();
 
-    console.log(this.data);
     callback();
   }
 
@@ -110,10 +103,7 @@ class Database {
   }
 
   private __init__() {
-    if (!fs.existsSync(this.file_path)) {
-      fs.writeFileSync(this.file_path, "{}");
-    }
-
+    if (!fs.existsSync(this.file_path)) fs.writeFileSync(this.file_path, "{}");
     const stringy = fs.readFileSync(this.file_path).toString();
 
     try {

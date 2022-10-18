@@ -9,7 +9,7 @@ import { GenerateToken } from "../utils/token";
 const Router = require("express")();
 const DB = new Database();
 
-Router.get("/create", (req: AnyMap, res: AnyMap) => {
+Router.post("/create", (req: AnyMap, res: AnyMap) => {
   const { username, email, password, is_admin, bot_creation_limit } = req.body;
   const { token } = req.headers;
   const id = uuid();
@@ -74,6 +74,39 @@ Router.get("/delete", (req: AnyMap, res: AnyMap) => {
       Message: "User deleted successfully.",
     });
   });
+});
+
+Router.get("/list", (req: AnyMap, res: AnyMap) => {
+  const { token } = req.headers;
+
+  const user = DB.getByKey("users", "token", token);
+
+  if (user == null) {
+    return res.status(401).json({ Success: false, Message: "Unauthorized" });
+  }
+
+  if (user.id == "super") {
+    const users = DB.getAll("users");
+
+    res.json({
+      Success: true,
+      Data: Object.keys(users).map((user: any) => {
+        return {
+          id: user,
+          ...users[user],
+          token: undefined,
+          password: undefined,
+        };
+      }),
+    });
+  } else {
+    if (user.isAdmin == false) {
+      return res.status(403).json({
+        Success: false,
+        Message: "Insufficient permissions. Only owner can create new accounts",
+      });
+    }
+  }
 });
 
 export default Router;

@@ -4,6 +4,7 @@ import CreateWebhook from "@/components/screen/CreateWebhook.vue";
 
 export default {
   components: { Box, CreateWebhook },
+
   data() {
     return {
       localStorage: localStorage,

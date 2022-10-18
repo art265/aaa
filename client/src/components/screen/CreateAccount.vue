@@ -1,4 +1,6 @@
 <script>
+import config from "../../config";
+
 export default {
   props: {
     Visible: {
@@ -9,6 +11,30 @@ export default {
     onCrossed: {
       type: Function,
       required: true,
+    },
+  },
+
+  methods: {
+    Create() {
+      // Create new user post request using fetch with json body
+      fetch(`${config.server}/users/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          throw err;
+        });
     },
   },
 
@@ -62,6 +88,8 @@ export default {
               <label for="">Username</label>
               <input
                 type="text"
+                :value="username"
+                @input="(event) => (username = event.target.value)"
                 placeholder="John"
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
               />
@@ -69,16 +97,10 @@ export default {
             <div>
               <label for="">Password</label>
               <input
+                :value="password"
+                @input="(event) => (password = event.target.value)"
                 type="password"
                 placeholder="******"
-                :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
-              />
-            </div>
-            <div>
-              <label for="">Email</label>
-              <input
-                type="email"
-                placeholder="johndoe@gmail.com"
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
               />
             </div>
@@ -87,6 +109,7 @@ export default {
 
         <div class="flex items-center px-6 mt-4 space-x-2 rounded-b">
           <button
+            v-on:click="Create"
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
           >
             Finalize

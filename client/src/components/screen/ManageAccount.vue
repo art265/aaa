@@ -71,7 +71,7 @@ export default {
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
               />
             </div>
-            <div>
+            <!-- <div>
               <label for="">Password</label>
               <input
                 type="password"
@@ -86,7 +86,7 @@ export default {
                 placeholder="johndoe@gmail.com"
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
               />
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="grid-cols-5 grid gap-3 px-6 mt-3 items-center">

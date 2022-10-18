@@ -12,6 +12,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <router-link
     :class="`

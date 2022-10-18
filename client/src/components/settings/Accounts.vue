@@ -1,14 +1,33 @@
 <script>
 import Account from "@/components/settings/AccountBox.vue";
 import CreateAccount from "@/components/screen/CreateAccount.vue";
+import Config from "../../config";
 
 export default {
   components: { Account, CreateAccount },
   data() {
     return {
+      users: [],
       VisibleDisplay: false,
       localStorage: localStorage,
     };
+  },
+
+  mounted() {
+    fetch(`${Config.server}/users/list`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.users = data.Data || [];
+      })
+      .catch((err) => {
+        throw err;
+      });
   },
 };
 </script>
@@ -29,6 +48,7 @@ export default {
           >
             Create
           </button>
+
           <div>
             <CreateAccount
               :Visible="VisibleDisplay"
@@ -41,12 +61,14 @@ export default {
           </div>
         </div>
       </div>
+
       <div class="grid grid-cols-5 gap-5 w-full">
-        <Account />
-        <Account />
-        <Account />
-        <Account />
-        <Account />
+        <Account
+          v-for="user in users"
+          :key="user"
+          :isAdmin="user.isAdmin"
+          :username="user.username"
+        ></Account>
       </div>
     </section>
   </main>

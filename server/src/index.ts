@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 
 import "../utils/main_user";
 import Users from "../routes/users";
+import Stats from "../routes/stats";
 import Login from "../routes/login";
 import Webhooks from "../routes/webhooks";
 import Instances from "../routes/instances";
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/users", Users);
 app.use("/login", Login);
+app.use("/stats", Stats);
 app.use("/webhooks", Webhooks);
 app.use("/instances", Instances);
 

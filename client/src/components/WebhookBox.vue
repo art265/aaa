@@ -24,6 +24,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <section
     class="w-full rounded-lg bg-gradient-to-b from-steel-300 to-steel-400 p-5"
