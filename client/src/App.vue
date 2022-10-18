@@ -6,14 +6,42 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import Sidebar from "@/components/Sidebar.vue";
+import config from "./config";
 export default {
   components: {
     Sidebar,
     RouterLink,
     RouterView,
   },
+
+  methods: {
+    Login() {
+      // Fetch post with json data
+      fetch(`${config.server}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.$router.push("/");
+          if (data.Success == true) {
+            localStorage.setItem("token", data.Data.Token);
+            window.location.reload();
+          }
+        });
+    },
+  },
+
   data() {
     return {
+      username: "",
+      password: "",
       localStorage: localStorage,
     };
   },
@@ -57,7 +85,9 @@ export default {
             <input
               type="text"
               placeholder="John"
+              :bind="username"
               :class="`bg-steel-300 rounded-lg p-3`"
+              @input="(event) => (username = event.target.value)"
             />
           </div>
           <div class="grid grid-cols-1">
@@ -65,11 +95,14 @@ export default {
             <input
               type="text"
               placeholder="******"
+              :value="password"
               :class="`bg-steel-300 rounded-lg p-3`"
+              @input="(event) => (password = event.target.value)"
             />
           </div>
           <div>
             <button
+              v-on:click="Login"
               :class="`rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
             >
               Login

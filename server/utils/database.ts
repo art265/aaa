@@ -26,10 +26,7 @@ class Database {
   };
 
   public get(table: string, value: string) {
-    return {
-      id: value,
-      ...(this.data[table] || {})[value],
-    };
+    return (this.data[table] || {})[value];
   }
 
   public getAll(table: string) {
@@ -86,6 +83,7 @@ class Database {
 
       if (table_data[key_][key] === value) {
         this.data[table][key_] = data;
+        console.log(this.data[table][key_]);
       }
     }
 
@@ -94,13 +92,16 @@ class Database {
   }
 
   public set(table: string, value: string, data: any, callback: Function) {
+    console.log("set");
     if (this.data[table] == null) {
       this.data[table] = {};
     }
 
+    console.log(this.data);
     this.data[table][value] = data;
     this.___save__();
 
+    console.log(this.data);
     callback();
   }
 

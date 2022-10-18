@@ -35,6 +35,7 @@ if (SUPER_USER != null) {
     });
   }
 } else {
+  console.log("Making Super User Account...");
   DB.set(
     "users",
     "super",
