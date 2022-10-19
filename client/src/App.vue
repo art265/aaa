@@ -7,14 +7,12 @@
 import { RouterLink, RouterView } from "vue-router";
 import Sidebar from "./components/Sidebar.vue";
 import config from "./config";
-
 export default {
   components: {
     Sidebar,
     RouterLink,
     RouterView,
   },
-
   methods: {
     Login() {
       // Fetch post with json data
@@ -38,7 +36,6 @@ export default {
         });
     },
   },
-
   data() {
     return {
       me: {},
@@ -47,10 +44,8 @@ export default {
       localStorage: localStorage,
     };
   },
-
   mounted() {
     const token = localStorage.token;
-
     if (token != null) {
       fetch(`${config.server}/me`, {
         method: "GET",
