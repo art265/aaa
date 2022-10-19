@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "build-server": "bash ./scripts/build_server.sh"
+    "build-server": "bash ./scripts/build_server.sh",
+    "build-client": "bash ./scripts/build_client.sh"
   }
 }
