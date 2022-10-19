@@ -31,7 +31,7 @@ export default {
 </script>
 
 <template>
-  <main class="p-5 mt-5 rounded-lg bg-steel-400 grid grid-cols-2 gap-5">
+  <section class="p-5 mt-5 rounded-lg bg-steel-400 grid grid-cols-2 gap-5">
     <section :class="`grid-cols-5 grid gap-3`">
       <div :class="`col-span-4`">
         <label for="" :class="`col-span-5`">Target script</label>
@@ -95,12 +95,28 @@ export default {
       >
         Save
       </button>
-      <button
-        v-on:click="() => {}"
-        :class="`rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-steel-300 shadow`"
-      >
-        Go Back
-      </button>
+      <router-link :to="`/`">
+        <button
+          v-on:click="() => {}"
+          :class="`rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-steel-300 shadow`"
+        >
+          Go Back
+        </button>
+      </router-link>
     </section>
-  </main>
+  </section>
+
+  <section :class="`flex-wrap flex justify-center mt-6`">
+    <h3 class="w-full"></h3>
+    <section :class="`bg-steel-400 rounded-lg w-full p-3`">
+      <h3>File Manager</h3>
+      <div :class="`rounded-lg p-5 bg-steel-300`">
+        <h1
+          :class="`text-4xl font-bold uppercase text-transparent bg-clip-text bg-steel-100 text-center`"
+        >
+          Drag & Drop Files
+        </h1>
+      </div>
+    </section>
+  </section>
 </template>

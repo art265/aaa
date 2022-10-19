@@ -1,14 +1,21 @@
 <script>
-import Target from "@/components/TargetBox.vue";
 import Config from "../config";
+import Target from "@/components/TargetBox.vue";
+import CreateInstance from "./screen/CreateInstance.vue";
 
 export default {
-  components: { Target },
+  components: { Target, CreateInstance },
 
   data() {
     return {
+      localStorage,
+      VisibleDisplay: false,
       instances: [],
     };
+  },
+
+  methods: {
+    Create() {},
   },
 
   mounted() {
@@ -36,7 +43,31 @@ export default {
     <section class="mt-5">
       <div class="">
         <section>
-          <h2>Instances</h2>
+          <div class="grid grid-cols-2 items-center">
+            <h2 class="text-xl font-semibold">Instances</h2>
+            <div>
+              <button
+                v-on:click="
+                  () => {
+                    VisibleDisplay = true;
+                  }
+                "
+                :class="`rounded-lg float-right w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+              >
+                Create
+              </button>
+              <div>
+                <CreateWebhook
+                  :Visible="VisibleDisplay"
+                  :onCrossed="
+                    () => {
+                      VisibleDisplay = false;
+                    }
+                  "
+                ></CreateWebhook>
+              </div>
+            </div>
+          </div>
           <section class="mt-1 grid xl:grid-cols-2 grid-cols-1 gap-3 w-full">
             <Target
               v-for="instance in instances"
@@ -49,7 +80,23 @@ export default {
             />
           </section>
         </section>
+        <CreateInstance
+          :Visible="VisibleDisplay"
+          :onCrossed="
+            () => {
+              VisibleDisplay = false;
+            }
+          "
+        />
       </div>
+    </section>
+    <section
+      v-if="instances.length == 0"
+      :class="`w-full bg-steel-400 capitalize text-center rounded-lg p-5 mt-3`"
+    >
+      <h1 :class="`text-base text-gray-400`">
+        No Instance(s) Found, Click "Create" to begin
+      </h1>
     </section>
   </main>
 </template>

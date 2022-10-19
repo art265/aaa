@@ -88,11 +88,30 @@ Router.get("/by/me/:instance_id", (req: AnyMap, res: AnyMap) => {
 });
 
 Router.post("/create", (req: AnyMap, res: AnyMap) => {
-  const { name, app_type, target_file } = req.body;
+  const {
+    name,
+    app_type,
+    target_file,
+    max_memory,
+    detached,
+    watch,
+    logs_dir,
+    auto_restart,
+  } = req.body;
+
   const dir_id = GenerateToken(16);
   const id = uuid();
 
-  if (name == null || app_type == null || target_file == null)
+  if (
+    name == null ||
+    app_type == null ||
+    target_file == null ||
+    max_memory == null ||
+    detached == null ||
+    watch == null ||
+    logs_dir == null ||
+    auto_restart == null
+  )
     return res
       .status(400)
       .json({ Success: false, Message: "Please fill in all the fields" });
@@ -108,6 +127,11 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
         name,
         app_type,
         target_file,
+        max_memory,
+        detached,
+        watch,
+        logs_dir,
+        auto_restart,
         owner: req.user.id,
         instance_location: dir_id,
       },
