@@ -91,6 +91,7 @@ export default {
           <Box
             v-for="hook in webhooks"
             :key="hook"
+            :id="hook.id"
             :title="hook.webhook_url"
             :onDeleteButtonClicked="
               () => {

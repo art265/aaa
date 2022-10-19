@@ -1,6 +1,7 @@
 import { AnyMap } from "../types";
 import { uuid } from "../utils/uuid";
 import Database from "../utils/database";
+import DiscordWebhook from "../utils/discord_webhook";
 
 const Router = require("express")();
 const DB = new Database();
@@ -78,6 +79,45 @@ Router.post("/delete", (req: AnyMap, res: AnyMap) => {
       Message: "Webhook deleted successfully.",
     });
   });
+});
+
+Router.post("/test", (req: AnyMap, res: AnyMap) => {
+  const { webhook_id } = req.body;
+  const user = req.user;
+
+  if (webhook_id == null) {
+    return res
+
+      .status(400)
+      .json({ Success: false, Message: "Please enter a valid webhook id" });
+  }
+
+  const webhook = DB.get("webhooks", webhook_id);
+
+  if (webhook == null) {
+    return res
+      .status(400)
+      .json({ Success: false, Message: "Unable to find webhook" });
+  }
+
+  if (webhook.owner !== user.id) {
+    return res.status(401).json({ Success: false, Message: "Unauthorized" });
+  }
+
+  const Discord = new DiscordWebhook(webhook.webhook_url);
+  Discord.Test()
+    .then((data) => {
+      res.json({
+        Success: true,
+        Message: "Webhook test successful.",
+      });
+    })
+    .catch((err) => {
+      res.json({
+        Success: false,
+        Message: "Webhook test failed.",
+      });
+    });
 });
 
 export default Router;

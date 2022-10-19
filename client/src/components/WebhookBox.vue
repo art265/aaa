@@ -1,5 +1,6 @@
 <script>
 import utils from "@/assets/js/utils";
+import config from "../config";
 
 const Colors = utils.getThemeColors();
 const themeColorRevert =
@@ -21,13 +22,40 @@ export default {
     active: {
       type: Boolean,
     },
+
+    id: {
+      type: String,
+      required: true,
+    },
   },
+
   data() {
     return {
       utils: utils,
       themeColorRevert: themeColorRevert,
       color: this.active === true ? `emerald` : `flush`,
     };
+  },
+
+  methods: {
+    TestWebhook() {
+      fetch(`${config.server}/webhooks/test`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+        body: JSON.stringify({
+          webhook_id: this.id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.Success) {
+          }
+        });
+    },
   },
 };
 </script>
@@ -59,6 +87,7 @@ export default {
                 Delete
               </button>
               <button
+                v-on:click="TestWebhook"
                 :class="`bg-blue ml-2  bg-opacity-50 float-right px-3 text-xs py-1 rounded border-blue border`"
               >
                 Test
