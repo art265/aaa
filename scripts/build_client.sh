@@ -20,4 +20,4 @@ rm -rf "./$DIR/dist"
 printf "\033c"
 
 echo "# Target" >"./target/README.md"
-echo "Server Backend Built in $(($(date +%s) - $START_TIMESTAMP)) seconds"
+echo "Client Built in $(($(date +%s) - $START_TIMESTAMP)) seconds"
