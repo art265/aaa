@@ -1,3 +1,4 @@
+START_TIMESTAMP=$(date +%s)
 DIR="client"
 
 if [ -d "./$DIR/dist" ]; then
@@ -16,4 +17,7 @@ cd ..
 cp -r "./$DIR/dist" "./target/client"
 rm -rf "./$DIR/dist"
 
+printf "\033c"
+
 echo "# Target" >"./target/README.md"
+echo "Server Backend Built in $(($(date +%s) - $START_TIMESTAMP)) seconds"

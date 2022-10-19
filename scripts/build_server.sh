@@ -1,3 +1,4 @@
+START_TIMESTAMP=$(date +%s)
 DIR="server"
 
 if [ -d "./$DIR/build" ]; then
@@ -39,3 +40,6 @@ echo "Built!"
 echo "cd ./target/server"
 echo "npm install"
 echo "npm run start"
+
+printf "\033c"
+echo "Client Fontend Built in $(($(date +%s) - $START_TIMESTAMP)) seconds"

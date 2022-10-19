@@ -43,16 +43,28 @@ export default {
           </h3>
           <h3 class="flex flex-wrap items-center space-x-1"></h3>
         </div>
-        <button
-          v-on:click="
-            () => {
-              VisibleDisplay = true;
-            }
-          "
-          :class="`mt-3 rounded-lg float-right w-full py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
-        >
-          Manage
-        </button>
+        <div class="grid-cols-4 gap-2 grid">
+          <button
+            v-on:click="
+              () => {
+                VisibleDisplay = true;
+              }
+            "
+            :class="`col-span-3 mt-3 rounded-lg float-right w-full py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+          >
+            Manage
+          </button>
+          <button
+            v-on:click="
+              () => {
+                VisibleDisplay = true;
+              }
+            "
+            :class="`mt-3 rounded-lg float-right w-full py-3 bg-steel-200`"
+          >
+            Delete
+          </button>
+        </div>
         <ManageAccount
           :Visible="VisibleDisplay"
           :onCrossed="

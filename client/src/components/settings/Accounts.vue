@@ -62,7 +62,7 @@ export default {
         </div>
       </div>
 
-      <div class="grid grid-cols-5 gap-5 w-full">
+      <div class="grid grid-cols-4 gap-5 w-full">
         <Account
           v-for="user in users"
           :key="user"
