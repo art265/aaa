@@ -21,6 +21,7 @@ class Database {
   public delete = (table: string, value: string, callback: Function) => {
     if (this.data[table] && this.data[table][value]) {
       delete this.data[table][value];
+
       this.___save__();
       callback();
     }

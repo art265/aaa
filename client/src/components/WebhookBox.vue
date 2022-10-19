@@ -8,9 +8,16 @@ const themeColorRevert =
 
 export default {
   props: {
+    onDeleteButtonClicked: {
+      type: Function,
+      required: true,
+    },
+
     title: {
       type: String,
+      required: true,
     },
+
     active: {
       type: Boolean,
     },
@@ -41,11 +48,12 @@ export default {
                 rounded-full`"
               ></div>
             </div> -->
-            <div>Discord.com</div>
+            <div>{{ title }}</div>
           </div>
           <div class="space-x-1">
             <div class="px-1 space-x-1">
               <button
+                v-on:click="onDeleteButtonClicked"
                 :class="`bg-flush ml-2  bg-opacity-50 float-right px-3 text-xs py-1 rounded border-flush border`"
               >
                 Delete

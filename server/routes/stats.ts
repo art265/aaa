@@ -1,10 +1,7 @@
 import pm2 from "pm2";
 
 import { AnyMap } from "../types";
-import Sha256 from "../utils/sha256";
-import { uuid } from "../utils/uuid";
 import Database from "../utils/database";
-import { GenerateToken } from "../utils/token";
 
 const Router = require("express")();
 const DB = new Database();

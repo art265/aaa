@@ -1,5 +1,5 @@
 {
   "name": "Script",
   "app_type": "Node",
-  "target_file": "./index.js"
+  "target_file": "index.js"
 }

@@ -42,3 +42,4 @@ class Templates {
 }
 
 export default Templates;
+export { storage_path as StoragePath };

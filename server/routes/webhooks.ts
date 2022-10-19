@@ -17,6 +17,13 @@ Router.use("*", (req: AnyMap, res: AnyMap, next: Function) => {
   next();
 });
 
+Router.get("/by/me", (req: AnyMap, res: AnyMap) => {
+  res.json({
+    Success: true,
+    Data: DB.getMultiByKey("webhooks", "owner", req.user.id),
+  });
+});
+
 Router.post("/create", (req: AnyMap, res: AnyMap) => {
   const user = req.user;
   const { webhook_url } = req.body;
@@ -41,6 +48,36 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
       });
     }
   );
+});
+
+Router.post("/delete", (req: AnyMap, res: AnyMap) => {
+  const user = req.user;
+  const { webhook_id } = req.body;
+
+  if (webhook_id == null) {
+    return res
+      .status(400)
+      .json({ Success: false, Message: "Please enter a valid webhook id" });
+  }
+
+  const webhook = DB.get("webhooks", webhook_id);
+
+  if (webhook == null) {
+    return res
+      .status(400)
+      .json({ Success: false, Message: "Unable to find webhook" });
+  }
+
+  if (webhook.owner !== user.id) {
+    return res.status(401).json({ Success: false, Message: "Unauthorized" });
+  }
+
+  DB.delete("webhooks", webhook_id, function () {
+    res.json({
+      Success: true,
+      Message: "Webhook deleted successfully.",
+    });
+  });
 });
 
 export default Router;

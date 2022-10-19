@@ -1,4 +1,6 @@
 <script>
+import config from "../../config";
+
 export default {
   props: {
     Visible: {
@@ -10,10 +12,36 @@ export default {
       required: true,
     },
   },
+
   data() {
     return {
+      webhook_url: "",
       localStorage,
     };
+  },
+
+  methods: {
+    Create() {
+      fetch(`${config.server}/webhooks/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+        body: JSON.stringify({
+          webhook_url: this.webhook_url,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.Success) {
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
+    },
   },
 };
 </script>
@@ -59,13 +87,16 @@ export default {
           <p class="text-sm leading-relaxed text-gray-400">Discord Webhook</p>
           <input
             type="text"
-            placeholder="https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxx"
+            :value="webhook_url"
+            @input="webhook_url = $event.target.value"
             :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+            placeholder="https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxx"
           />
         </div>
 
         <div class="flex items-center px-6 mt-2 space-x-2 rounded-b">
           <button
+            v-on:click="Create"
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
           >
             Finalize
@@ -77,6 +108,7 @@ export default {
             Never mind
           </button>
         </div>
+
         <div class="py-3"></div>
       </div>
     </div>

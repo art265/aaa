@@ -1,12 +1,12 @@
 // Generate User Token
 
 export function GenerateToken(length: number) {
-  let result = "";
-  let characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  let chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
+  let str = "";
+
+  while (str.length < length) {
+    str += chars[Math.floor(Math.random() * chars.length)];
   }
-  return result;
+
+  return str;
 }

@@ -1,15 +1,59 @@
 <script>
 import Box from "@/components/WebhookBox.vue";
 import CreateWebhook from "@/components/screen/CreateWebhook.vue";
+import config from "../config";
 
 export default {
   components: { Box, CreateWebhook },
 
   data() {
     return {
+      webhooks: [],
       localStorage: localStorage,
       VisibleDisplay: false,
     };
+  },
+
+  mounted() {
+    fetch(`${config.server}/webhooks/by/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.webhooks = data.Data || [];
+        console.log(this.webhooks);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  methods: {
+    DeleteWebhook(webhook_id) {
+      fetch(`${config.server}/webhooks/delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+        body: JSON.stringify({
+          webhook_id: webhook_id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.Success) {
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
+    },
   },
 };
 </script>
@@ -44,8 +88,16 @@ export default {
           </div>
         </div>
         <section class="space-y-3">
-          <Box />
-          <Box :active="true" />
+          <Box
+            v-for="hook in webhooks"
+            :key="hook"
+            :title="hook.webhook_url"
+            :onDeleteButtonClicked="
+              () => {
+                DeleteWebhook(hook.id);
+              }
+            "
+          />
         </section>
       </div>
     </section>
