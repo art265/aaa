@@ -22,7 +22,6 @@ export default {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.Success) {
           this.Instance = data.Data || {};
         }
@@ -94,7 +93,7 @@ export default {
         v-on:click="() => {}"
         :class="`shadow rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
       >
-        Create
+        Save
       </button>
       <button
         v-on:click="() => {}"

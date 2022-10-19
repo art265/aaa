@@ -28,11 +28,12 @@ export default {
   },
 
   methods: {
-    welcomeMessage(username) {
+    welcomeMessage() {
       let date = new Date();
       let hook = date.getHours() < 12 ? "Good Morning" : "Good Afternoon";
-      return `${hook}, ${username}`;
+      return hook;
     },
+
     changeTheme(theme) {
       this.localStorage.theme = theme;
     },
@@ -54,12 +55,15 @@ export default {
           rounded-lg
         `"
       >
-        <section class="py-2 border-b flex items-center border-winkle-200">
+        <section
+          class="flex items-center bg-opacity-10 p-2.5 rounded-lg bg-white"
+        >
           <h2 class="">
-            {{ welcomeMessage(`${username}`) }}
+            {{ welcomeMessage() }},
+            <strong class="capitalize">{{ username }}</strong>
           </h2>
         </section>
-        <section class="space-y-2 mt-5">
+        <section class="space-y-2 mt-3">
           <URL href="/" name="Home" icon="fa-solid fa-earth-asia" />
           <URL href="/dashboard" name="Stats" icon="fa-solid fa-chart-simple" />
           <URL href="/webhooks" name="Webhooks" icon="fa-solid fa-list-check" />

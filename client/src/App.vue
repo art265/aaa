@@ -64,6 +64,8 @@ export default {
           if (data.Success != true) {
             localStorage.removeItem("token");
             window.location.reload();
+          } else {
+            this.me = data.Data;
           }
         });
     }

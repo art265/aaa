@@ -25,7 +25,6 @@ export default {
       .then((res) => res.json())
       .then((data) => {
         this.webhooks = data.Data || [];
-        console.log(this.webhooks);
       })
       .catch((err) => {
         throw err;
@@ -103,6 +102,7 @@ export default {
       </div>
     </section>
     <section
+      v-if="webhooks.length == 0"
       :class="`w-full bg-steel-400 capitalize text-center rounded-lg p-5`"
     >
       <h1 :class="`text-base text-gray-400`">You got no Discord webhook(s)</h1>

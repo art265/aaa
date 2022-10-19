@@ -23,7 +23,6 @@ export default {
       .then((res) => res.json())
       .then((data) => {
         this.instances = data.Data || [];
-        console.log(this.instances);
       })
       .catch((err) => {
         throw err;

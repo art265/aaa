@@ -15,7 +15,6 @@ Router.get("/", (req: AnyMap, res: AnyMap) => {
   }
 
   const user = DB.getByKey("users", "token", token);
-  console.log(user);
 
   if (user != null) {
     return res.status(200).json({
