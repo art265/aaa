@@ -1,18 +1,32 @@
 <script>
 import ToggleButton from "../components/ToggleButton.vue";
 import FileManager from "../components/FileManager.vue";
+import config from "../config";
 
 export default {
   components: { ToggleButton, FileManager },
   data() {
     return {
-      AutoRestart: false,
-      directories: [
-        { name: "src", isDir: true },
-        { name: "index.js", isDir: false },
-      ],
+      Instance: {},
       localStorage: localStorage,
     };
+  },
+
+  mounted() {
+    // Fetch instance\
+    fetch(`${config.server}/instances/by/me/${this.$route.params.id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.Success) {
+          this.Instance = data.Data || {};
+        }
+      });
   },
 };
 </script>
@@ -24,6 +38,7 @@ export default {
       <div :class="`col-span-4`">
         <input
           type="text"
+          :value="Instance.target_file"
           placeholder="index.js"
           class="p-3 bg-steel-300 rounded-lg w-full"
         />
@@ -31,10 +46,10 @@ export default {
       <div :class="`ml-3`">
         <ToggleButton
           :class="`h-10`"
-          :On="AutoRestart"
+          :On="Instance.AutoRestart"
           :onClicked="
             () => {
-              AutoRestart = !AutoRestart;
+              Instance.AutoRestart = !Instance.AutoRestart;
             }
           "
         />
@@ -42,22 +57,35 @@ export default {
     </section>
 
     <section :class="`grid-cols-5 grid`">
-      <label for="" :class="`col-span-5`">Target script</label>
+      <label for="" :class="`col-span-5`">Directory Destination</label>
       <div :class="`col-span-4`">
         <input
+          disabled="true"
           type="text"
           placeholder="index.js"
+          :value="Instance.full_path"
           class="p-3 bg-steel-300 rounded-lg w-full"
         />
       </div>
+
       <div :class="`ml-3 flex`">
         <select class="px-3 bg-steel-300 rounded-lg w-full">
-          <option value="">Node.js</option>
-          <option value="">Python</option>
+          <option
+            :selected="Instance.app_type?.toLowerCase() == 'node'"
+            value="Node"
+          >
+            Node.js
+          </option>
+          <option
+            :selected="Instance.app_type?.toLowerCase() == 'python'"
+            value="Python"
+          >
+            Python
+          </option>
         </select>
       </div>
     </section>
 
-    <FileManager class="col-span-2" :directories="directories" />
+    <FileManager class="col-span-2" :directories="Instance.files" />
   </main>
 </template>

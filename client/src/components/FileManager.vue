@@ -12,6 +12,15 @@ export default {
       this.DarkColor = !this.DarkColor;
       return this.DarkColor == true ? "bg-steel-300" : "bg-steel-200";
     },
+
+    ByteSizeFormatter(bytes) {
+      if (bytes == 0) return "0 Bytes";
+      var k = 1024,
+        dm = 2,
+        sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+    },
   },
 
   data() {
@@ -29,14 +38,12 @@ export default {
       <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-300">
           <thead
-            class="text-xs text-white uppercase border-b border-steel-400 bg-steel-300 dark:bg-gray-700 dark:text-gray-400"
+            :class="`text-xs text-white uppercase border-b border-steel-400 ${ColorToClass()} dark:bg-gray-700 dark:text-gray-400`"
           >
             <tr>
               <th scope="col" class="py-3 px-6">Name</th>
               <th scope="col" class="py-3 px-6">Type</th>
               <th scope="col" class="py-3 px-6">Size</th>
-              <th scope="col" class="py-3 px-6">Price</th>
-              <th scope="col" class="py-3 px-6">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -52,14 +59,8 @@ export default {
                 {{ dir.name }}
               </th>
               <td class="py-4 px-6">{{ dir.isDir ? "Folder" : "File" }}</td>
-              <td class="py-4 px-6">Laptop</td>
-              <td class="py-4 px-6">$2999</td>
               <td class="py-4 px-6">
-                <a
-                  href="#"
-                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >Edit</a
-                >
+                {{ ByteSizeFormatter(parseFloat(dir.size)) }}
               </td>
             </tr>
           </tbody>

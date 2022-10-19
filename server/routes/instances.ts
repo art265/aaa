@@ -1,10 +1,12 @@
 import pm2 from "pm2";
+import fs from "fs";
 
 import { AnyMap } from "../types";
 import { uuid } from "../utils/uuid";
 import Database from "../utils/database";
 import TemplatesMaker, { StoragePath } from "../utils/templates";
 import { GenerateToken } from "../utils/token";
+import { stat } from "fs-extra";
 
 const Templates = new TemplatesMaker();
 const Router = require("express")();
@@ -51,13 +53,37 @@ Router.get("/by/me/:instance_id", (req: AnyMap, res: AnyMap) => {
     return res.status(401).json({ Success: false, Message: "Unauthorized" });
   }
 
+  const instances = DB.getMultiByKey("instances", "owner", req.user.id).map(
+    (instance) => {
+      if (instance.id == instance_id) {
+        const instance_storage = `${StoragePath}/${instance.instance_location}`;
+
+        return {
+          ...instance,
+          files: fs.readdirSync(instance_storage).map((dir) => {
+            const stats = fs.lstatSync(`${instance_storage}/${dir}`);
+            return {
+              name: dir,
+              size: stats.size,
+              isDir: stats.isDirectory(),
+            };
+          }),
+        };
+      }
+    }
+  );
+
+  const instance = instances.filter((instance) => instance != null)[0];
+
   res.json({
     Success: true,
-    Data: DB.getMultiByKey("instances", "owner", req.user.id).map(
-      (instance) => {
-        if (instance.id == instance_id) return instance;
-      }
-    ),
+    Data: {
+      full_path: `${StoragePath}/${instance.instance_location}`.replace(
+        "//",
+        "/"
+      ),
+      ...instance,
+    },
   });
 });
 

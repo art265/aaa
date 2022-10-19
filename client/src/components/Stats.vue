@@ -13,14 +13,11 @@ export default {
   },
 };
 </script>
+
 <template>
   <main>
     <section
-      :class="` rounded-lg
-            bg-gradient-to-r
-            from-${localStorage.theme}-300
-            to-${localStorage.theme}-400
-            p-5`"
+      :class="`rounded-lg bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-400 p-5`"
     >
       <div class="grid grid-cols-2 items-center">
         <h5 class="text-winkle-300 text-lg">{{ value }}</h5>
