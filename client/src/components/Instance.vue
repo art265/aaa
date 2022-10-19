@@ -33,9 +33,9 @@ export default {
 
 <template>
   <main class="p-5 mt-5 rounded-lg bg-steel-400 grid grid-cols-2 gap-5">
-    <section :class="`grid-cols-5 grid`">
-      <label for="" :class="`col-span-5`">Target script</label>
+    <section :class="`grid-cols-5 grid gap-3`">
       <div :class="`col-span-4`">
+        <label for="" :class="`col-span-5`">Target script</label>
         <input
           type="text"
           :value="Instance.target_file"
@@ -43,7 +43,8 @@ export default {
           class="p-3 bg-steel-300 rounded-lg w-full"
         />
       </div>
-      <div :class="`ml-3`">
+      <div :class="``">
+        <label for="" :class="`col-span-5`">Auto restart</label>
         <ToggleButton
           :class="`h-10`"
           :On="Instance.AutoRestart"
@@ -87,5 +88,20 @@ export default {
     </section>
 
     <FileManager class="col-span-2" :directories="Instance.files" />
+
+    <section :class="`space-x-3`">
+      <button
+        v-on:click="() => {}"
+        :class="`shadow rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+      >
+        Create
+      </button>
+      <button
+        v-on:click="() => {}"
+        :class="`rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-steel-300 shadow`"
+      >
+        Go Back
+      </button>
+    </section>
   </main>
 </template>

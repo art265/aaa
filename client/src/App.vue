@@ -5,8 +5,9 @@
 
 <script>
 import { RouterLink, RouterView } from "vue-router";
-import Sidebar from "@/components/Sidebar.vue";
+import Sidebar from "./components/Sidebar.vue";
 import config from "./config";
+
 export default {
   components: {
     Sidebar,
@@ -40,10 +41,32 @@ export default {
 
   data() {
     return {
+      me: {},
       username: "",
       password: "",
       localStorage: localStorage,
     };
+  },
+
+  mounted() {
+    const token = localStorage.token;
+
+    if (token != null) {
+      fetch(`${config.server}/me`, {
+        method: "GET",
+        headers: {
+          token,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.Success != true) {
+            localStorage.removeItem("token");
+            window.location.reload();
+          }
+        });
+    }
   },
 };
 </script>
@@ -58,7 +81,7 @@ export default {
       </div>
       <div class="grid-cols-12 grid">
         <div class="col-span-2">
-          <Sidebar />
+          <Sidebar :username="me.username" />
         </div>
         <div class="col-span-10 mr-5">
           <RouterView />

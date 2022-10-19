@@ -102,5 +102,10 @@ export default {
         </section>
       </div>
     </section>
+    <section
+      :class="`w-full bg-steel-400 capitalize text-center rounded-lg p-5`"
+    >
+      <h1 :class="`text-base text-gray-400`">You got no Discord webhook(s)</h1>
+    </section>
   </main>
 </template>

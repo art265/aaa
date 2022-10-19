@@ -18,7 +18,7 @@ export default {
         <section class="">
           <main>
             <div>
-              <h2 class="text-xl font-semibold">Select Theme</h2>
+              <h2 class="text-xl font-semibold">Customize</h2>
             </div>
             <div class="gap-3 mt-3 grid-cols-2 grid">
               <Selector color="emerald" />

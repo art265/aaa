@@ -1,8 +1,14 @@
 <script>
 import URL from "@/components/SidebarLinkTag.vue";
 import Dropdown from "@/components/SidebarDropdown.vue";
+
 export default {
   components: { URL, Dropdown },
+
+  props: {
+    username: String,
+  },
+
   data() {
     return {
       SettingsDropdownData: [
@@ -20,6 +26,7 @@ export default {
       localStorage: localStorage,
     };
   },
+
   methods: {
     welcomeMessage(username) {
       let date = new Date();
@@ -49,7 +56,7 @@ export default {
       >
         <section class="py-2 border-b flex items-center border-winkle-200">
           <h2 class="">
-            {{ welcomeMessage(`$Username`) }}
+            {{ welcomeMessage(`${username}`) }}
           </h2>
         </section>
         <section class="space-y-2 mt-5">
