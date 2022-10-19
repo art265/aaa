@@ -10,6 +10,7 @@ export default {
       id: utils.randomString(12),
     };
   },
+
   props: {
     header: String,
     type: String,
@@ -27,6 +28,7 @@ export default {
       ],
     },
   },
+
   mounted() {
     const Options = this.options;
     const Data = this.data;

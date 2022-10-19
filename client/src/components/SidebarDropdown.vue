@@ -29,6 +29,7 @@ export default {
         </div>
       </div>
     </button>
+
     <div
       v-show="show"
       :class="`w-full mt-1 px-3 space-y-1 bg-${localStorage.theme}-400 rounded-md`"

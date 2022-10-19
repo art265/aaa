@@ -22,6 +22,7 @@ let border = utils.hexToRgb(`${themeColor}`, 1);
 
 export default {
   components: { Stats, NewChart },
+
   data() {
     return {
       localStorage: localStorage,

@@ -6,6 +6,7 @@ export default {
     length: Number,
     label: String,
   },
+
   data() {
     return {
       localStorage: localStorage,

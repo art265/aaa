@@ -11,6 +11,7 @@ export default {
 
   data() {
     return {
+      localStorage: localStorage,
       SettingsDropdownData: [
         {
           name: "Accounts",
@@ -23,7 +24,6 @@ export default {
           href: "/settings/customize",
         },
       ],
-      localStorage: localStorage,
     };
   },
 

@@ -1,7 +1,6 @@
 <script>
 import Node from "../assets/imgs/node.png";
 import Python from "../assets/imgs/python.png";
-import { RouterLink } from "vue-router";
 
 export default {
   components: { Python, Node },
