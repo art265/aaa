@@ -4,6 +4,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 import "../utils/main_user";
+import "../utils/templates";
 import Users from "../routes/users";
 import Stats from "../routes/stats";
 import Login from "../routes/login";

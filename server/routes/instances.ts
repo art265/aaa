@@ -1,8 +1,12 @@
-import { AnyMap } from "../types";
 import pm2 from "pm2";
-import Database from "../utils/database";
-import { uuid } from "../utils/uuid";
 
+import { AnyMap } from "../types";
+import { uuid } from "../utils/uuid";
+import Database from "../utils/database";
+import TemplatesMaker from "../utils/templates";
+import { GenerateToken } from "../utils/token";
+
+const Templates = new TemplatesMaker();
 const Router = require("express")();
 const DB = new Database();
 
@@ -48,6 +52,7 @@ Router.get("/by/me", (req: AnyMap, res: AnyMap) => {
 
 Router.post("/create", (req: AnyMap, res: AnyMap) => {
   const { name, app_type, target_file } = req.body;
+  const dir_id = GenerateToken(16);
   const id = uuid();
 
   if (name == null || app_type == null || target_file == null) {
@@ -56,25 +61,33 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
       .json({ Success: false, Message: "Please fill in all the fields" });
   }
 
-  DB.set(
-    "instances",
-    id,
-    {
-      name,
-      app_type,
-      target_file,
-      owner: req.user.id,
-    },
-    function () {
-      res.json({
-        Success: true,
-        Message: "Instance created successfully.",
-        Data: {
-          Id: id,
-        },
-      });
+  Templates.Create(dir_id, app_type, (err: any) => {
+    if (err != null) {
+      return res.status(500).json({ Success: false, Message: err });
     }
-  );
+
+    DB.set(
+      "instances",
+      id,
+      {
+        name,
+        app_type,
+        target_file,
+        owner: req.user.id,
+        instance_location: dir_id,
+      },
+      function () {
+        res.json({
+          Success: true,
+          Message: "Instance created successfully.",
+          Data: {
+            InstanceLocation: dir_id,
+            Id: id,
+          },
+        });
+      }
+    );
+  });
 });
 
 Router.post("/start", (req: AnyMap, res: AnyMap) => {

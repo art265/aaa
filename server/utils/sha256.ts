@@ -1,8 +1,8 @@
 import crypto from "crypto";
 
 class Sha256 {
-  public hash = (value: string): string => {
-    return crypto.createHash("sha256").update(value).digest("hex");
+  public hash = (value: string, type: "hex" | "base64" = "hex"): string => {
+    return crypto.createHash("sha256").update(value).digest(type);
   };
 }
 
