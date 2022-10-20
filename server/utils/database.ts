@@ -27,6 +27,25 @@ class Database {
     }
   };
 
+  public deleteByKey(
+    table: string,
+    key: string,
+    value: string,
+    callback: Function
+  ) {
+    const table_data = this.data[table] || {};
+    const keys = Object.keys(table_data) || [];
+
+    for (let x = 0; x < keys.length; x++) {
+      const key_ = keys[x];
+
+      if (table_data[key_][key] === value) delete this.data[table][key_];
+    }
+
+    this.___save__();
+    callback();
+  }
+
   public get(table: string, value: string) {
     return (this.data[table] || {})[value];
   }

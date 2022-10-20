@@ -49,29 +49,29 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
   );
 });
 
-Router.get("/delete", (req: AnyMap, res: AnyMap) => {
+Router.post("/delete", (req: AnyMap, res: AnyMap) => {
   const { user_id } = req.body;
 
+  const { token } = req.headers;
+
+  const creator = DB.getByKey("users", "token", token);
+
+  if (creator == null) {
+    return res.status(401).json({ Success: false, Message: "Unauthorized" });
+  }
+
+  if (creator.id != "super") {
+    return res
+      .status(403)
+      .json({ Success: false, Message: "Insufficient permissions." });
+  }
+
   DB.delete("users", user_id, function () {
-    const instances_object = DB.getAll("instances");
-    const instances = Object.keys(instances_object).map((key) => {
-      return {
-        ...instances_object[key],
-        id: key,
-      };
-    });
-
-    for (let x = 0; x < instances.length; x++) {
-      const ins = instances[x];
-
-      if (ins.owner === user_id) {
-        DB.delete("instances", ins.id, function () {});
-      }
-    }
-
-    res.json({
-      Success: true,
-      Message: "User deleted successfully.",
+    DB.deleteByKey("instances", "owner", user_id, function () {
+      res.json({
+        Success: true,
+        Message: "User deleted successfully.",
+      });
     });
   });
 });

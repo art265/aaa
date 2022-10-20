@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
 import ManageAccount from "@/components/screen/ManageAccount.vue";
+import config from "@/config";
 
 export default {
   components: { ManageAccount },
@@ -13,6 +14,36 @@ export default {
     isAdmin: {
       type: Boolean,
       required: true,
+    },
+
+    accountId: {
+      type: String,
+      required: true,
+    },
+  },
+
+  methods: {
+    onClickDelete(account_id: string) {
+      fetch(`${config.server}/users/delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+        body: JSON.stringify({
+          user_id: account_id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.Success) {
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
     },
   },
 
@@ -43,26 +74,22 @@ export default {
           </h3>
           <h3 class="flex flex-wrap items-center space-x-1"></h3>
         </div>
-        <div class="grid-cols-4 gap-2 grid">
+        <div class="grid-cols-5 gap-2 grid">
           <button
             v-on:click="
               () => {
                 VisibleDisplay = true;
               }
             "
-            :class="`col-span-3 mt-3 rounded-lg float-right w-full py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+            :class="`col-span-4 mt-3 rounded-lg float-right w-full py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
           >
             Manage
           </button>
           <button
-            v-on:click="
-              () => {
-                VisibleDisplay = true;
-              }
-            "
+            v-on:click="onClickDelete(accountId)"
             :class="`mt-3 rounded-lg float-right w-full py-3 bg-steel-200`"
           >
-            Delete
+            <i class="fa-solid fa-trash-can"></i>
           </button>
         </div>
         <ManageAccount

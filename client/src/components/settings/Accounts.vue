@@ -66,6 +66,7 @@ export default {
         <Account
           v-for="user in users"
           :key="user"
+          :accountId="user.id"
           :isAdmin="user.isAdmin"
           :username="user.username"
         ></Account>
