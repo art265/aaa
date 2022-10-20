@@ -1,0 +1,10 @@
+version: "3"
+services:
+  server:
+    container_name: centauri
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 6464:6465
+    restart: always

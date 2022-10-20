@@ -1,0 +1,26 @@
+FROM node:16-alpine
+
+# Test
+RUN ls
+
+# Create Working Directory
+WORKDIR /app
+
+# Install app dependencies
+COPY ./ ./
+
+# Install Modules
+RUN npm install
+
+# Install forever
+RUN npm install forever -g
+
+# Check 
+RUN ls
+
+# Bundle app source
+COPY . .
+
+EXPOSE 6464
+RUN forever start ./src/index.js
+CMD [ "forever", "start", "./src/index.js" ]
