@@ -1,8 +1,5 @@
 FROM node:16-alpine
 
-# Test
-RUN ls
-
 # Create Working Directory
 WORKDIR /app
 
@@ -10,10 +7,7 @@ WORKDIR /app
 COPY ./ ./
 
 # Install Modules
-RUN npm install
-
-# Install forever
-RUN npm install forever -g
+RUN npm install && npm install forever -g
 
 # Check 
 RUN ls
@@ -21,6 +15,6 @@ RUN ls
 # Bundle app source
 COPY . .
 
+RUN forever start ./src/index.js --spinSleepTime 10000
+
 EXPOSE 6464
-RUN forever start ./src/index.js
-CMD [ "forever", "start", "./src/index.js" ]

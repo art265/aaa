@@ -2,7 +2,7 @@
   "scripts": {
     "build-server": "bash ./scripts/build_server.sh",
     "build-client": "bash ./scripts/build_client.sh",
-    "build-final": "cp ./Dockerfile ./target/Dockerfile\ncp ./docker-compose.yaml ./target/docker-compose.yaml",
+    "build-final": "cp ./server/Dockerfile ./target/server/Dockerfile\ncp ./docker-compose.yaml ./target/docker-compose.yaml",
     "build": "npm run build-server\nnpm run build-client\nnpm run build-final"
   }
 }
