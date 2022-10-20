@@ -51,10 +51,14 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
 
 Router.post("/delete", (req: AnyMap, res: AnyMap) => {
   const { user_id } = req.body;
-
   const { token } = req.headers;
 
+  const user = DB.get("users", user_id);
   const creator = DB.getByKey("users", "token", token);
+
+  if (creator == user) {
+    return res.status(401).json({ Success: false, Message: "User not found" });
+  }
 
   if (creator == null) {
     return res.status(401).json({ Success: false, Message: "Unauthorized" });
@@ -64,6 +68,12 @@ Router.post("/delete", (req: AnyMap, res: AnyMap) => {
     return res
       .status(403)
       .json({ Success: false, Message: "Insufficient permissions." });
+  }
+
+  if (user.id == "super") {
+    return res
+      .status(403)
+      .json({ Success: false, Message: "Cannot delete super user." });
   }
 
   DB.delete("users", user_id, function () {
