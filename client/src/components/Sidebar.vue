@@ -43,7 +43,7 @@ export default {
 
 <template>
   <main>
-    <section class="p-5">
+    <section class="p-5 text-gray-50">
       <div
         :class="`
           p-3

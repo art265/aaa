@@ -1,8 +1,3 @@
-<style lang="scss">
-@import "@/assets/scss/index.scss";
-@import "@/assets/scss/tailwinds.scss";
-</style>
-
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import Sidebar from "./components/Sidebar.vue";

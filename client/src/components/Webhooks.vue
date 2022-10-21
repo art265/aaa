@@ -1,37 +1,56 @@
 <script>
-import Box from "@/components/WebhookBox.vue";
 import CreateWebhook from "@/components/screen/CreateWebhook.vue";
+import Box from "@/components/WebhookBox.vue";
+import Toast from "./screen/Toast.vue";
 import config from "../config";
 
 export default {
-  components: { Box, CreateWebhook },
+  components: { Box, CreateWebhook, Toast },
 
   data() {
     return {
       webhooks: [],
       localStorage: localStorage,
       VisibleDisplay: false,
+      Toast: {
+        Message: "",
+        Show: false,
+        Success: false,
+        Fire(message, success, timeout = 3000) {
+          this.Message = message;
+          this.Success = success;
+          this.Show = true;
+
+          setTimeout(() => {
+            this.Show = false;
+          }, timeout);
+        },
+      },
     };
   },
 
   mounted() {
-    fetch(`${config.server}/webhooks/by/me`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        token: localStorage.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        this.webhooks = data.Data || [];
-      })
-      .catch((err) => {
-        throw err;
-      });
+    this.FetchMyWebhooks();
   },
 
   methods: {
+    FetchMyWebhooks() {
+      fetch(`${config.server}/webhooks/by/me`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.webhooks = data.Data || [];
+        })
+        .catch((err) => {
+          throw err;
+        });
+    },
+
     DeleteWebhook(webhook_id) {
       fetch(`${config.server}/webhooks/delete`, {
         method: "POST",
@@ -45,8 +64,9 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
+          this.Toast.Fire(data.Message, data.Success);
           if (data.Success) {
-            window.location.reload();
+            this.FetchMyWebhooks();
           }
         })
         .catch((err) => {
@@ -59,6 +79,11 @@ export default {
 
 <template>
   <main class="">
+    <Toast
+      :Show="Toast.Show"
+      :Success="Toast.Success"
+      :Message="Toast.Message"
+    />
     <section class="mt-5">
       <div class="grid grid-cols-1 gap-5 w-full">
         <div class="grid grid-cols-2 items-center">

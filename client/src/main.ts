@@ -3,6 +3,10 @@ import router from "./router";
 import utils from "./assets/js/utils";
 
 import { createApp } from "vue";
+
+import "@/assets/scss/tailwinds.scss";
+import "@/assets/scss/index.scss";
+
 const app = createApp(App);
 
 app.use(router);
