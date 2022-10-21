@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 import { Chart, registerables } from "chart.js";
-
+import Toast from "./toast/index";
 import utils from "@/assets/js/utils";
 import Stats from "@/components/Stats.vue";
 import NewChart from "@/components/NewChart.vue";
@@ -9,9 +9,9 @@ Chart.register(...registerables);
 const Colors = utils.getThemeColors();
 const DatasetData = utils.fakeDatasetsArray(500, 75, 100);
 const DatasetsLabels = utils.fakeLabelsArray(24);
-const themeColor = Colors[localStorage.theme];
+const themeColor = (Colors as any)[localStorage.theme];
 const themeColorRevert = utils
-  .changeHue(Colors[localStorage.theme], 180)
+  .changeHue((Colors as any)[localStorage.theme], 180)
   .replace("#", "");
 
 let green = utils.hexToRgb(`${Colors["steel"]}`, 0.1);
@@ -122,6 +122,13 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    Toast.$fire({
+      Message: "Hi",
+      Success: true,
+      Show: true,
+    });
   },
 };
 </script>

@@ -1,7 +1,10 @@
 <script>
 import config from "../../config";
+import Toast from "./Toast.vue";
 
 export default {
+  components: { Toast },
+
   props: {
     Visible: {
       type: Boolean,
@@ -16,7 +19,21 @@ export default {
   data() {
     return {
       webhook_url: "",
-      localStorage,
+      localStorage: localStorage,
+      Toast: {
+        Message: "",
+        Show: false,
+        Success: false,
+        Fire(message, success, timeout = 3000) {
+          this.Message = message;
+          this.Success = success;
+          this.Show = true;
+
+          setTimeout(() => {
+            this.Show = false;
+          }, timeout);
+        },
+      },
     };
   },
 
@@ -34,9 +51,9 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.Success) {
-            window.location.reload();
-          }
+          console.log(this);
+          console.log(this.Toast);
+          this.Toast.Fire(data.Message, data.Success, 3000);
         })
         .catch((err) => {
           throw err;
@@ -53,6 +70,11 @@ export default {
     aria-hidden="true"
     class="overflow-y-auto flex flex-wrap justify-center mt-20 overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
   >
+    <Toast
+      :Show="Toast.Show"
+      :Success="Toast.Success"
+      :Message="Toast.Message"
+    />
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
       <div class="relative bg-steel-400 rounded-lg shadow">
         <div

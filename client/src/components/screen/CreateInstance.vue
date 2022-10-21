@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import ToggleButton from "@/components/ToggleButton.vue";
 import config from "../../config";
 
@@ -62,7 +62,7 @@ export default {
         });
     },
 
-    onSelectChange(e) {
+    onSelectChange(e: any) {
       const type = e.target.value;
 
       switch (type) {
@@ -95,8 +95,12 @@ export default {
           <h3 class="text-xl font-semibold text-white">Create Instance</h3>
           <button
             type="button"
-            v-on:click="onCrossed"
             class="text-gray-400 bg-transparent hover:bg-steel-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            v-on:click="
+              () => {
+                onCrossed();
+              }
+            "
           >
             <svg
               aria-hidden="true"
@@ -123,9 +127,12 @@ export default {
                 type="text"
                 :value="Name"
                 :placeholder="Name"
-                @input="Name = $event.target.value"
-                placeholder="Goofy ahh Python script"
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+                @input="
+                  (e) => {
+                    Name = (e.target as HTMLInputElement).value;
+                  }
+                "
               />
             </div>
           </div>
@@ -137,9 +144,13 @@ export default {
             <input
               type="number"
               :value="MaxMemory"
-              :placeholder="MaxMemory"
-              @input="MaxMemory = $event.target.value"
+              :placeholder="(MaxMemory as any)"
               :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+              @input="
+                  (e) => {
+                    MaxMemory = parseInt((e.target as HTMLInputElement).value);
+                  }
+                "
             />
           </div>
 
@@ -185,8 +196,12 @@ export default {
               type="text"
               :value="LogsDirectory"
               :placeholder="LogsDirectory"
-              @input="LogsDirectory = $event.target.value"
               :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+              @input="
+                  (e) => {
+                    LogsDirectory = (e.target as HTMLInputElement).value;
+                  }
+                "
             />
           </div>
 
@@ -226,8 +241,12 @@ export default {
                   type="text"
                   :value="TargetFile"
                   :placeholder="TargetFile"
-                  @input="TargetFile = $event.target.value"
                   :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+                  @input="
+                  (e) => {
+                    TargetFile = (e.target as HTMLInputElement).value;
+                  }
+                "
                 />
               </div>
             </div>
@@ -243,7 +262,11 @@ export default {
           </button>
           <button
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-8 py-3 bg-steel-300`"
-            v-on:click="onCrossed"
+            v-on:click="
+              () => {
+                onCrossed();
+              }
+            "
           >
             Close
           </button>

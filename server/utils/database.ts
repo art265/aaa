@@ -13,6 +13,8 @@ class Database {
     users: {},
     webhooks: {},
     instances: {},
+    ram_usage: {},
+    cpu_usage: {},
   };
 
   constructor(file_path?: string) {
@@ -152,10 +154,6 @@ class Database {
 
       this.data = this.default_data;
     }
-
-    if (this.data.instances == null) this.data.instances = {};
-    if (this.data.webhooks == null) this.data.webhooks = {};
-    if (this.data.users == null) this.data.users = {};
   }
 }
 

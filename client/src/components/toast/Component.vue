@@ -1,24 +1,18 @@
 <script lang="ts">
 export default {
+  name: "Toast",
+
   props: {
     Success: {
       type: Boolean,
-      required: true,
     },
 
     Message: {
       type: String,
-      required: true,
-    },
-
-    Show: {
-      type: Boolean,
-      required: true,
     },
 
     Timeout: {
       type: Number,
-      required: true,
       default: 3000,
     },
   },
@@ -32,7 +26,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="Show" class="toast">
+  <div class="toast">
     <section :class="`sticky`">
       <div
         :style="`animation: fade-in-bottom .3s;`"

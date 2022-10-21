@@ -1,12 +1,14 @@
-<script>
-import DiscordImage from "../assets/imgs/discord.png";
-import utils from "@/assets/js/utils";
-import config from "../config";
+<script lang="ts">
+import DiscordImage from "../../assets/imgs/discord.png";
+import utils from "../../assets/js/utils.ts";
+import config from "../../config";
 
 const Colors = utils.getThemeColors();
 const themeColorRevert =
-  (utils.changeHue(Colors[localStorage.theme], 180) || "").replace("#", "") ||
-  "000000";
+  (utils.changeHue((Colors as any)[localStorage.theme], 180) || "").replace(
+    "#",
+    ""
+  ) || "000000";
 
 export default {
   props: {

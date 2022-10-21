@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 import CreateWebhook from "@/components/screen/CreateWebhook.vue";
-import Box from "@/components/WebhookBox.vue";
-import Toast from "./screen/Toast.vue";
-import config from "../config";
+import Toast from "../screen/Toast.vue";
+import Box from "./WebhookBox.vue";
+import config from "../../config";
 
 export default {
   components: { Box, CreateWebhook, Toast },
@@ -16,7 +16,7 @@ export default {
         Message: "",
         Show: false,
         Success: false,
-        Fire(message, success, timeout = 3000) {
+        Fire(message: string, success: boolean, timeout = 3000) {
           this.Message = message;
           this.Success = success;
           this.Show = true;
@@ -51,7 +51,7 @@ export default {
         });
     },
 
-    DeleteWebhook(webhook_id) {
+    DeleteWebhook(webhook_id: string) {
       fetch(`${config.server}/webhooks/delete`, {
         method: "POST",
         headers: {
@@ -72,6 +72,10 @@ export default {
         .catch((err) => {
           throw err;
         });
+    },
+
+    FireToast: function (message: string, success: boolean, timeout = 3000) {
+      this.Toast.Fire(message, success, timeout);
     },
   },
 };
@@ -113,7 +117,7 @@ export default {
         </div>
         <section class="space-y-3">
           <Box
-            v-for="hook in webhooks"
+            v-for="hook in (webhooks as any)"
             :key="hook"
             :id="hook.id"
             :title="hook.webhook_url"

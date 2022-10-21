@@ -15,6 +15,16 @@ export default {
       type: Function,
       required: true,
     },
+
+    OffText: {
+      type: String,
+      default: "Off",
+    },
+
+    OnText: {
+      type: String,
+      default: "On",
+    },
   },
 
   data() {
@@ -34,7 +44,7 @@ export default {
     <div
       :class="`${ClassName} rounded-lg text-center items-center flex justify-center uppercase font-semibold bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
     >
-      {{ On === true ? "On" : "Off" }}
+      {{ On === true ? OnText : OffText }}
     </div>
   </div>
 </template>

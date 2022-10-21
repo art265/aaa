@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 export default {
   props: {
     icon: String,
@@ -35,7 +35,7 @@ export default {
       :class="`w-full mt-1 px-3 space-y-1 bg-${localStorage.theme}-400 rounded-md`"
     >
       <router-link
-        v-for="child in children"
+        v-for="child in (children as any)"
         :key="child"
         :to="child.href"
         :class="`block px-4 py-2 text-sm  duration-300 hover:bg-${localStorage.theme}-200 rounded-lg`"

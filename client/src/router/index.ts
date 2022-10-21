@@ -1,26 +1,28 @@
-import ToDo from "../views/Webhooks.vue";
-import HomeView from "../views/Home.vue";
-import Dash from "../views/Dashboard.vue";
-import Accounts from "../views/Accounts.vue";
-import Instance from "../views/Instance.vue";
-import Customize from "../views/Customize.vue";
+import Dashboard from "../components/Dashboard.vue";
+import Webhooks from "../components/webhooks/Webhooks.vue";
+import Accounts from "../components/settings/Accounts.vue";
+import Customize from "../components/settings/Customizer.vue";
+
+import Instance from "../components/instances/Instance.vue";
+import Instances from "../components/instances/Instances.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 
+const env = (import.meta as any).env;
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(env.BASE_URL),
   routes: [
     {
       path: "/",
-      component: Dash,
+      component: Dashboard,
     },
     {
       path: "/instances",
-      component: HomeView,
+      component: Instances,
     },
     {
       path: "/webhooks",
-      component: ToDo,
+      component: Webhooks,
     },
     {
       path: "/settings/customize",

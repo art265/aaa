@@ -1,5 +1,5 @@
-<script>
-import Selector from "@/components/ThemeSelector.vue";
+<script lang="ts">
+import Selector from "./ThemeSelector.vue";
 
 export default {
   components: { Selector },

@@ -1,6 +1,6 @@
-<script>
-import URL from "@/components/SidebarLinkTag.vue";
-import Dropdown from "@/components/SidebarDropdown.vue";
+<script lang="ts">
+import Dropdown from "./SidebarDropdown.vue";
+import URL from "./SidebarLinkTag.vue";
 
 export default {
   components: { URL, Dropdown },
@@ -34,7 +34,7 @@ export default {
       return hook;
     },
 
-    changeTheme(theme) {
+    changeTheme(theme: number) {
       this.localStorage.theme = theme;
     },
   },

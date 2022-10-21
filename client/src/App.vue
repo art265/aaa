@@ -1,16 +1,17 @@
-<script>
+<script lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import Sidebar from "./components/Sidebar.vue";
+import Sidebar from "./components/sidebar/Sidebar.vue";
 import config from "./config";
+
 export default {
   components: {
     Sidebar,
     RouterLink,
     RouterView,
   },
+
   methods: {
     Login() {
-      // Fetch post with json data
       fetch(`${config.server}/login`, {
         method: "POST",
         headers: {
@@ -31,9 +32,13 @@ export default {
         });
     },
   },
+
   data() {
     return {
-      me: {},
+      me: {
+        username: "",
+        password: "",
+      },
       username: "",
       password: "",
       localStorage: localStorage,
@@ -76,7 +81,7 @@ export default {
           <Sidebar :username="me.username" />
         </div>
         <div class="col-span-10 mr-5">
-          <RouterView />
+          <RouterView :style="`animation: fade-in .25s ease-in`" />
         </div>
       </div>
 
@@ -102,17 +107,25 @@ export default {
               placeholder="John"
               :bind="username"
               :class="`bg-steel-300 rounded-lg p-3`"
-              @input="(event) => (username = event.target.value)"
+              @input="
+                (event) => {
+                  username = (event.target as HTMLInputElement).value;
+                }
+              "
             />
           </div>
           <div class="grid grid-cols-1">
             <label for="">Password</label>
             <input
               type="text"
-              placeholder="******"
               :value="password"
+              placeholder="******"
               :class="`bg-steel-300 rounded-lg p-3`"
-              @input="(event) => (password = event.target.value)"
+              @input="
+                (event) => {
+                  password = (event.target as HTMLInputElement).value;
+                }
+              "
             />
           </div>
           <div>

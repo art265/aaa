@@ -1,7 +1,7 @@
 <script lang="ts">
-import Config from "../config";
-import Target from "../components/TargetBox.vue";
-import CreateInstance from "./screen/CreateInstance.vue";
+import CreateInstance from "../screen/CreateInstance.vue";
+import Target from "../TargetBox.vue";
+import Config from "../../config";
 
 export default {
   components: { Target, CreateInstance },
