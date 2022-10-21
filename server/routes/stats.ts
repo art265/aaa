@@ -7,7 +7,11 @@ const Router = require("express")();
 
 Router.get("/me", (req: AnyMap, res: AnyMap) => {
   pm2.list((err: any, list: any) => {
-    console.log(list);
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(list);
+    }
   });
 
   const { token } = req.headers;
@@ -24,9 +28,6 @@ Router.get("/me", (req: AnyMap, res: AnyMap) => {
 
   const instances = DB.getMultiByKey("instances", "owner", user.id);
   const webhooks = DB.getMultiByKey("webhooks", "owner", user.id);
-
-  console.log(instances);
-  console.log(user);
 
   res.json({
     Success: true,
@@ -45,6 +46,6 @@ Router.get("/me", (req: AnyMap, res: AnyMap) => {
   });
 });
 
-Router.get("/instances", (req: AnyMap, res: AnyMap) => {});
+Router.get("/instances", (_req: AnyMap, _res: AnyMap) => {});
 
 export default Router;

@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 import Config from "../config";
-import Target from "@/components/TargetBox.vue";
+import Target from "../components/TargetBox.vue";
 import CreateInstance from "./screen/CreateInstance.vue";
 
 export default {
@@ -10,7 +10,15 @@ export default {
     return {
       localStorage,
       VisibleDisplay: false,
-      instances: [],
+      instances: [
+        // {
+        //   name: "Instance 1",
+        //   description: "This is a description",
+        //   app_type: "Node",
+        //   active: true,
+        //   id: "1",
+        // },
+      ],
     };
   },
 
@@ -52,7 +60,7 @@ export default {
                     VisibleDisplay = true;
                   }
                 "
-                :class="`rounded-lg float-right w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+                :class="`text-white rounded-lg float-right w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
               >
                 Create
               </button>
@@ -68,9 +76,9 @@ export default {
               </div>
             </div>
           </div>
-          <section class="mt-1 grid xl:grid-cols-2 grid-cols-1 gap-3 w-full">
+          <section class="mt-3 grid xl:grid-cols-1 grid-cols-1 gap-3 w-full">
             <Target
-              v-for="instance in instances"
+              v-for="instance in (instances as any)"
               :key="instance"
               :Name="instance.name"
               :Type="instance.app_type"

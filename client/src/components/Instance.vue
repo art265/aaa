@@ -39,13 +39,13 @@ export default {
           type="text"
           :value="Instance.target_file"
           placeholder="index.js"
-          class="p-3 bg-steel-300 rounded-lg w-full"
+          class="shadow p-3 bg-steel-300 rounded-lg w-full"
         />
       </div>
       <div :class="``">
         <label for="" :class="`col-span-5`">Auto restart</label>
         <ToggleButton
-          :class="`h-10`"
+          :class="`h-10 shadow`"
           :On="Instance.AutoRestart"
           :onClicked="
             () => {
@@ -64,12 +64,12 @@ export default {
           type="text"
           placeholder="index.js"
           :value="Instance.full_path"
-          class="p-3 bg-steel-300 rounded-lg w-full"
+          class="shadow p-3 bg-steel-300 rounded-lg w-full"
         />
       </div>
 
       <div :class="`ml-3 flex`">
-        <select class="px-3 bg-steel-300 rounded-lg w-full">
+        <select class="shadow px-3 bg-steel-300 rounded-lg w-full">
           <option
             :selected="Instance.app_type?.toLowerCase() == 'node'"
             value="Node"
@@ -95,7 +95,7 @@ export default {
       >
         Save
       </button>
-      <router-link :to="`/`">
+      <router-link :to="`/instances`">
         <button
           v-on:click="() => {}"
           :class="`rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-steel-300 shadow`"
@@ -114,7 +114,7 @@ export default {
         <h1
           :class="`text-4xl font-bold uppercase text-transparent bg-clip-text bg-steel-100 text-center`"
         >
-          Drag & Drop Files
+          UPLOAD
         </h1>
       </div>
     </section>

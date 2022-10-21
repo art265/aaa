@@ -114,13 +114,13 @@ Router.post("/test", (req: AnyMap, res: AnyMap) => {
 
   const Discord = new DiscordWebhook(webhook.webhook_url);
   Discord.Test()
-    .then((data) => {
+    .then((_) => {
       res.json({
         Success: true,
         Message: "Webhook test successful.",
       });
     })
-    .catch((err) => {
+    .catch((_) => {
       res.json({
         Success: false,
         Message: "Webhook test failed.",

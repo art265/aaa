@@ -26,6 +26,7 @@ export default {
 
   data() {
     return {
+      localStorage: localStorage,
       Image:
         (this.Type || "").toLowerCase() === "node"
           ? Node
@@ -38,13 +39,12 @@ export default {
 </script>
 
 <template>
-  <router-link
-    :to="onClickLocation"
+  <main
     class="w-full rounded-lg bg-gradient-to-b from-steel-300 to-steel-400 bg-pos-0 hover:bg-pos-100 duration-500 bg-size-200 transition-all p-5"
   >
     <section>
       <div>
-        <div class="">
+        <div class="grid-cols-2 grid items-center">
           <div class="flex flex-wrap text-winkle-300 items-center space-x-3">
             <div>
               <img :src="Image" class="w-10 h-10" />
@@ -56,8 +56,16 @@ export default {
               </h2>
             </div>
           </div>
+          <router-link :to="onClickLocation">
+            <button
+              v-on:click="() => {}"
+              :class="`float-right shadow text-white rounded-lg w-full lg:w-auto lg:px-11 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+            >
+              Manage
+            </button>
+          </router-link>
         </div>
       </div>
     </section>
-  </router-link>
+  </main>
 </template>

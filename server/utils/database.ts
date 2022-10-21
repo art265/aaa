@@ -129,8 +129,6 @@ class Database {
   }
 
   private ___save__() {
-    console.log(this.data);
-    console.log(`Saving Bruh`);
     fs.writeFileSync(this.file_path, JSON.stringify(this.data));
   }
 

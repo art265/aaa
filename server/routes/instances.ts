@@ -1,7 +1,6 @@
 import pm2 from "pm2";
 import fs from "fs";
 
-import { stat } from "fs-extra";
 import { AnyMap } from "../types";
 import DB from "../utils/database";
 import { uuid } from "../utils/uuid";
@@ -11,7 +10,7 @@ import TemplatesMaker, { StoragePath } from "../utils/templates";
 const Templates = new TemplatesMaker();
 const Router = require("express")();
 
-Router.get("/", (req: AnyMap, res: AnyMap) => {
+Router.get("/", (_req: AnyMap, res: AnyMap) => {
   pm2.list((err: any, list: any) => {
     if (err) {
       res.status(500).json({ Success: false, Message: err });

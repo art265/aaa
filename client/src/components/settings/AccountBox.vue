@@ -36,7 +36,6 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.Success) {
             window.location.reload();
           }
