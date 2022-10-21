@@ -91,7 +91,7 @@ export default {
     <section :class="`space-x-3`">
       <button
         v-on:click="() => {}"
-        :class="`shadow rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+        :class="`text-white shadow rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
       >
         Save
       </button>
@@ -109,12 +109,12 @@ export default {
   <section :class="`flex-wrap flex justify-center mt-6`">
     <h3 class="w-full"></h3>
     <section :class="`bg-steel-400 rounded-lg w-full p-3`">
-      <h3>File Manager</h3>
+      <!-- <h3>File Manager</h3> -->
       <div :class="`rounded-lg p-5 bg-steel-300`">
         <h1
           :class="`text-4xl font-bold uppercase text-transparent bg-clip-text bg-steel-100 text-center`"
         >
-          UPLOAD
+          DROP TO UPLOAD FILES
         </h1>
       </div>
     </section>

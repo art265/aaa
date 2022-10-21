@@ -1,4 +1,5 @@
 <script>
+import DiscordImage from "../assets/imgs/discord.png";
 import utils from "@/assets/js/utils";
 import config from "../config";
 
@@ -32,6 +33,7 @@ export default {
   data() {
     return {
       utils: utils,
+      DiscordImage: DiscordImage,
       themeColorRevert: themeColorRevert,
       color: this.active === true ? `emerald` : `flush`,
     };
@@ -65,8 +67,8 @@ export default {
   >
     <section>
       <div>
-        <div class="grid grid-cols-2">
-          <div class="flex flex-wrap text-winkle-300 items-center space-x-3">
+        <div class="items-center grid grid-cols-2">
+          <div class="flex flex-wrap text-winkle-300 space-x-3 items-center">
             <!-- <div :v-if="active != null">
               <div
                 :class="`bg-${color} bg-opacity-50
@@ -75,12 +77,17 @@ export default {
                 rounded-full`"
               ></div>
             </div> -->
+            <img :src="DiscordImage" class="object-cover w-8 h-8" />
             <div>{{ title }}</div>
           </div>
           <div class="space-x-1">
             <div class="px-1 space-x-1">
               <button
-                v-on:click="onDeleteButtonClicked"
+                v-on:click="
+                  () => {
+                    onDeleteButtonClicked();
+                  }
+                "
                 :class="`bg-flush ml-2  bg-opacity-50 float-right px-3 text-xs py-1 rounded border-flush border`"
               >
                 Delete
