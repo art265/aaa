@@ -1,10 +1,9 @@
 import "dotenv/config";
 
+import DB from "./database";
 import sha256 from "./sha256";
-import Database from "./database";
 import { GenerateToken } from "./token";
 
-const DB = new Database();
 const SUPER_USER = DB.get("users", "super");
 
 const USERNAME = process.env.SUPER_USERNAME as string;
@@ -42,11 +41,13 @@ if (SUPER_USER != null) {
     {
       isAdmin: true,
       username: USERNAME,
+      max_webhooks: 1000,
+      max_instances: 1000,
       token: GenerateToken(256),
       password: sha256.hash(PASSWORD),
     },
-    function () {
-      console.log("Super User Created, Restart the server.");
+    function (user: any) {
+      console.log(`Super User Account(${user.username}) Created!`);
     }
   );
 }

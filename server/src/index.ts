@@ -3,8 +3,8 @@ import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
 
-import "../utils/main_user";
 import "../utils/templates";
+import "../utils/main_user";
 
 import Me from "../routes/me";
 import Users from "../routes/users";

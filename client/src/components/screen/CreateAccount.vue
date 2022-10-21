@@ -1,7 +1,10 @@
-<script>
+<script lang="ts">
 import config from "../../config";
+import ToggleButton from "../ToggleButton.vue";
 
 export default {
+  components: { ToggleButton },
+
   props: {
     Visible: {
       type: Boolean,
@@ -24,8 +27,11 @@ export default {
           token: localStorage.token,
         },
         body: JSON.stringify({
+          admin: this.IsAdmin,
           username: this.username,
           password: this.password,
+          max_webhooks: this.max_webhooks,
+          max_instances: this.max_instances,
         }),
       })
         .then((res) => res.json())
@@ -40,7 +46,12 @@ export default {
 
   data() {
     return {
-      localStorage,
+      username: "",
+      password: "",
+      IsAdmin: false,
+      max_webhooks: 3,
+      max_instances: 5,
+      localStorage: localStorage,
     };
   },
 };
@@ -61,8 +72,12 @@ export default {
           <h3 class="text-xl font-semibold text-white">Create New User</h3>
           <button
             type="button"
-            v-on:click="onCrossed"
             class="text-gray-400 bg-transparent hover:bg-steel-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            v-on:click="
+              () => {
+                onCrossed();
+              }
+            "
           >
             <svg
               aria-hidden="true"
@@ -81,15 +96,14 @@ export default {
           </button>
         </div>
 
-        <div class="px-6 mt-3 text-gray-300 text-sm">
-          <p class="text-base leading-relaxed"></p>
-          <div class="space-y-2">
+        <div class="px-6 mt-3 text-gray-300 text-sm space-y-3">
+          <div class="grid-cols-2 grid gap-3">
             <div>
               <label for="">Username</label>
               <input
                 type="text"
                 :value="username"
-                @input="(event) => (username = event.target.value)"
+                @input="(event) => (username = (event.target as HTMLInputElement).value)"
                 placeholder="John"
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
               />
@@ -98,10 +112,44 @@ export default {
               <label for="">Password</label>
               <input
                 :value="password"
-                @input="(event) => (password = event.target.value)"
+                @input="(event) => (password = (event.target as HTMLInputElement).value)"
                 type="password"
                 placeholder="******"
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+              />
+            </div>
+          </div>
+          <div class="grid-cols-5 grid gap-3">
+            <div class="col-span-2">
+              <label for="">Max Webhooks</label>
+              <input
+                :value="max_webhooks"
+                @input="(event) => (max_webhooks = parseInt((event.target as HTMLInputElement).value))"
+                type="number"
+                placeholder="3"
+                :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+              />
+            </div>
+            <div class="col-span-2">
+              <label for="">Max Instances</label>
+              <input
+                :value="max_instances"
+                @input="(event) => (max_instances = parseInt((event.target as HTMLInputElement).value))"
+                type="number"
+                placeholder="100"
+                :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
+              />
+            </div>
+            <div :class="`text-gray-300 col-span-1`">
+              <label for="">Admin</label>
+              <ToggleButton
+                :On="IsAdmin"
+                ClassName="h-10"
+                :onClicked="
+                  () => {
+                    IsAdmin = !IsAdmin;
+                  }
+                "
               />
             </div>
           </div>
@@ -116,9 +164,13 @@ export default {
           </button>
           <button
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-8 py-3 bg-steel-300`"
-            v-on:click="onCrossed"
+            v-on:click="
+              () => {
+                onCrossed();
+              }
+            "
           >
-            Never mind
+            Close
           </button>
         </div>
         <div class="py-3"></div>

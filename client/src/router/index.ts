@@ -12,11 +12,11 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: HomeView,
+      component: Dash,
     },
     {
-      path: "/dashboard",
-      component: Dash,
+      path: "/instances",
+      component: HomeView,
     },
     {
       path: "/webhooks",

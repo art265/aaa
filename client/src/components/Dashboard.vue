@@ -129,10 +129,9 @@ export default {
 <template>
   <main class="">
     <section class="py-5">
-      <div class="grid grid-cols-3 gap-5 w-full">
-        <Stats percentage="100" value="3425924" length="34" label="Memory" />
-        <Stats percentage="100" value="3425924" length="34" label="Storage" />
-        <Stats percentage="100" value="3425924" length="34" label="Memory" />
+      <div class="grid grid-cols-2 gap-5 w-full">
+        <Stats percentage="100" value="1/10" length="10" label="Instances" />
+        <Stats percentage="100" value="1/5" length="20" label="Webhooks" />
       </div>
     </section>
     <section class="">

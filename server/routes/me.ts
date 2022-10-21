@@ -1,8 +1,7 @@
 import { AnyMap } from "../types";
-import Database from "../utils/database";
+import DB from "../utils/database";
 
 const Router = require("express")();
-const DB = new Database();
 
 Router.get("/", (req: AnyMap, res: AnyMap) => {
   const { token } = req.headers;

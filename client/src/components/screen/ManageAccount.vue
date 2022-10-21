@@ -72,7 +72,7 @@ export default {
               />
             </div>
             <!-- <div>
-              <label for="">Password</label>
+              <label for="">Password</label>  
               <input
                 type="password"
                 placeholder="******"

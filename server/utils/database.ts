@@ -9,6 +9,11 @@ import path from "path";
 class Database {
   private __root = __dirname.replace(path.basename(__dirname), "");
   private default_path = `${this.__root}/database.json`;
+  private default_data = {
+    users: {},
+    webhooks: {},
+    instances: {},
+  };
 
   constructor(file_path?: string) {
     this.file_path = file_path || this.default_path;
@@ -16,7 +21,12 @@ class Database {
   }
 
   private file_path: string = this.default_path;
-  private data: { [key: string]: { [key: string]: any } } = {};
+  private data: {
+    ["users"]: any;
+    ["webhooks"]: any;
+    ["instances"]: any;
+    [key: string]: any;
+  } = this.default_data;
 
   public delete = (table: string, value: string, callback: Function) => {
     if (this.data[table] && this.data[table][value]) {
@@ -115,15 +125,19 @@ class Database {
     this.data[table][value] = data;
     this.___save__();
 
-    callback();
+    callback(this.data[table][value]);
   }
 
   private ___save__() {
+    console.log(this.data);
+    console.log(`Saving Bruh`);
     fs.writeFileSync(this.file_path, JSON.stringify(this.data));
   }
 
   private __init__() {
-    if (!fs.existsSync(this.file_path)) fs.writeFileSync(this.file_path, "{}");
+    if (!fs.existsSync(this.file_path))
+      fs.writeFileSync(this.file_path, JSON.stringify(this.default_data));
+
     const stringy = fs.readFileSync(this.file_path).toString();
 
     try {
@@ -138,9 +152,13 @@ class Database {
         );
       });
 
-      this.data = {};
+      this.data = this.default_data;
     }
+
+    if (this.data.instances == null) this.data.instances = {};
+    if (this.data.webhooks == null) this.data.webhooks = {};
+    if (this.data.users == null) this.data.users = {};
   }
 }
 
-export default Database;
+export default new Database();

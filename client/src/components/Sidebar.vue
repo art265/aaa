@@ -56,17 +56,18 @@ export default {
         `"
       >
         <section
-          class="flex items-center bg-opacity-10 p-2.5 rounded-lg bg-white"
+          class="flex w-full items-center bg-opacity-10 p-2.5 rounded-lg bg-white"
         >
           <h2 class="">
             {{ welcomeMessage() }},
             <strong class="capitalize">{{ username }}</strong>
           </h2>
         </section>
+
         <section class="space-y-2 mt-3">
-          <URL href="/" name="Home" icon="fa-solid fa-earth-asia" />
-          <URL href="/dashboard" name="Stats" icon="fa-solid fa-chart-simple" />
-          <URL href="/webhooks" name="Webhooks" icon="fa-solid fa-list-check" />
+          <URL href="/" name="Dashboard" icon="fa-solid fa-chart-simple" />
+          <URL href="/instances" name="Instances" icon="fa-solid fa-server" />
+          <URL href="/webhooks" name="Webhooks" icon="fa-solid fa-signs-post" />
           <Dropdown
             name="Settings"
             icon="fa-solid fa-screwdriver-wrench"

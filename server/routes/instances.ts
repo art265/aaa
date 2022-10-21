@@ -1,16 +1,15 @@
 import pm2 from "pm2";
 import fs from "fs";
 
-import { AnyMap } from "../types";
-import { uuid } from "../utils/uuid";
-import Database from "../utils/database";
-import TemplatesMaker, { StoragePath } from "../utils/templates";
-import { GenerateToken } from "../utils/token";
 import { stat } from "fs-extra";
+import { AnyMap } from "../types";
+import DB from "../utils/database";
+import { uuid } from "../utils/uuid";
+import { GenerateToken } from "../utils/token";
+import TemplatesMaker, { StoragePath } from "../utils/templates";
 
 const Templates = new TemplatesMaker();
 const Router = require("express")();
-const DB = new Database();
 
 Router.get("/", (req: AnyMap, res: AnyMap) => {
   pm2.list((err: any, list: any) => {
@@ -102,6 +101,20 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
   const dir_id = GenerateToken(16);
   const id = uuid();
 
+  const creator = req.user;
+  const instances_by_creator = DB.getMultiByKey(
+    "instances",
+    "owner",
+    creator.id
+  );
+
+  if (instances_by_creator.length >= creator.max_instances) {
+    return res.status(400).json({
+      Success: false,
+      Message: "You have reached the maximum amount of instances.",
+    });
+  }
+
   if (
     name == null ||
     app_type == null ||
@@ -165,8 +178,12 @@ Router.post("/start", (req: AnyMap, res: AnyMap) => {
         {
           script: `${StoragePath}/${instance.instance_location}/${instance.target_file}`,
           cwd: `${StoragePath}/${instance.instance_location}`,
-          name: instance.name,
+          name: `${instance.name}`,
           interpreter: "node",
+          env: {
+            CENTAURI_owner: req.user.id,
+            CENTAURI_instance: instance.id,
+          },
         },
         (err: any, apps: any) => {
           if (err) {

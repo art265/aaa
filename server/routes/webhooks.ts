@@ -1,10 +1,9 @@
 import { AnyMap } from "../types";
 import { uuid } from "../utils/uuid";
-import Database from "../utils/database";
+import DB from "../utils/database";
 import DiscordWebhook from "../utils/discord_webhook";
 
 const Router = require("express")();
-const DB = new Database();
 
 Router.use("*", (req: AnyMap, res: AnyMap, next: Function) => {
   const { token } = req.headers;
@@ -35,12 +34,21 @@ Router.post("/create", (req: AnyMap, res: AnyMap) => {
       .json({ Success: false, Message: "Please enter a valid webhook" });
   }
 
+  const hooks_by_creator = DB.getMultiByKey("webhooks", "owner", user.id);
+
+  if (hooks_by_creator.length >= user.max_instances) {
+    return res.status(400).json({
+      Success: false,
+      Message: "You have reached the maximum amount of webhooks.",
+    });
+  }
+
   DB.set(
     "webhooks",
     uuid(),
     {
       owner: user.id,
-      webhook_url,
+      webhook_url: webhook_url,
     },
     function () {
       res.json({

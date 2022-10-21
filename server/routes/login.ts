@@ -1,9 +1,8 @@
 import { AnyMap } from "../types";
 import Sha256 from "../utils/sha256";
-import Database from "../utils/database";
+import DB from "../utils/database";
 
 const Router = require("express")();
-const DB = new Database();
 
 Router.post("/", (req: AnyMap, res: AnyMap) => {
   const { username, password } = req.body;
