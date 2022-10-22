@@ -1,3 +1,7 @@
 setTimeout(() => {
-  console.log(new Date().toTimeString());
-}, 5000);
+  console.log(
+    `Generated ${
+      (Math.random() * 100) ^ (Math.random() * 100)
+    } at ${new Date().toTimeString()}`
+  );
+}, 500);

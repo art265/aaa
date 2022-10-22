@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 
 import "../utils/templates";
 import "../utils/main_user";
+import "../utils/resource_usage";
 
 import Me from "../routes/me";
 import Users from "../routes/users";

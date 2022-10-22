@@ -124,12 +124,7 @@ export default {
     };
   },
 
-  mounted() {
-    Toast.$failure("Welcome to the dashboard", 1000);
-    Toast.$warning("Welcome to the dashboard", 1000);
-    Toast.$info("Welcome to the dashboard", 1000);
-    Toast.$success("Welcome to the dashboard", 1000);
-  },
+  mounted() {},
 };
 </script>
 
