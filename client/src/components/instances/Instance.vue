@@ -18,6 +18,8 @@ export default {
         full_path: "",
         files: [],
       },
+      DarkColor: false,
+      SelectedFiles: [],
       localStorage: localStorage,
     };
   },
@@ -35,6 +37,40 @@ export default {
           this.Instance = data.Data || {};
         }
       });
+  },
+
+  methods: {
+    ColorToClass() {
+      this.DarkColor = !this.DarkColor;
+      return this.DarkColor == true ? "bg-steel-300" : "bg-steel-200";
+    },
+
+    ByteSizeFormatter(bytes: number) {
+      if (bytes == 0) return "0 Bytes";
+      var k = 1024,
+        dm = 2,
+        sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+    },
+
+    formatBytes(bytes: number) {
+      if (bytes == 0) return "0 Bytes";
+      var k = 1024,
+        dm = 2,
+        sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+    },
+
+    onFilesChange(e: any) {
+      const files = e.target.files;
+      for (let x = 0; x < files.length; x++) {
+        const file = files[x];
+        console.log(file);
+        this.SelectedFiles = files;
+      }
+    },
   },
 };
 </script>
@@ -135,13 +171,24 @@ export default {
   <section :class="`w-full mt-3`">
     <section :class="`bg-steel-400 rounded-lg p-3`">
       <div class="grid grid-cols-2">
-        <div>
-          <button
-            v-on:click="() => {}"
-            :class="`text-white shadow rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
+        <div class="flex flex-wrap space-x-3 float-right">
+          <label
+            for="dropzone-file"
+            :class="`text-white  shadow rounded-lg w-full lg:w-auto lg:px-12 py-3 bg-gradient-to-r from-${localStorage.theme}-300 to-${localStorage.theme}-500`"
           >
-            Upload
-          </button>
+            <span>Upload</span>
+            <input
+              id="dropzone-file"
+              type="file"
+              class="hidden"
+              multiple
+              v-on:change="
+                (e) => {
+                  onFilesChange(e);
+                }
+              "
+            />
+          </label>
         </div>
         <div class="flex flex-wrap space-x-3 float-right">
           <select
@@ -170,6 +217,45 @@ export default {
           </button>
         </div>
       </div>
+    </section>
+
+    <section
+      :class="`w-full mt-3 bg-steel-400 rounded-lg p-3`"
+      v-if="SelectedFiles.length > 0"
+    >
+      <table class="table-auto text-start w-full bg-steel-300 rounded-lg p-3">
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <table class="w-full text-sm text-left text-gray-300">
+            <thead
+              :class="`text-xs text-white uppercase border-b border-steel-400 ${ColorToClass()}`"
+            >
+              <tr>
+                <th scope="col" class="py-3 px-6">Name</th>
+                <th scope="col" class="py-3 px-6">Type</th>
+                <th scope="col" class="py-3 px-6">Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                :class="`${ColorToClass()} border-b border-steel-400`"
+                v-for="dir in (SelectedFiles as any)"
+                :key="dir"
+              >
+                <th
+                  scope="row"
+                  class="py-4 px-6 font-medium whitespace-nowrap dark:text-white"
+                >
+                  {{ dir.name }}
+                </th>
+                <td class="py-4 px-6">{{ dir.type }}</td>
+                <td class="py-4 px-6">
+                  {{ ByteSizeFormatter(parseFloat(dir.size)) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </table>
     </section>
   </section>
 </template>

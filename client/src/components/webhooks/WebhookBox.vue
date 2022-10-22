@@ -1,7 +1,8 @@
 <script lang="ts">
 import DiscordImage from "../../assets/imgs/discord.png";
-import utils from "../../assets/js/utils.ts";
+import utils from "../../assets/js/utils";
 import config from "../../config";
+import toast from "../toast";
 
 const Colors = utils.getThemeColors();
 const themeColorRevert =
@@ -56,6 +57,9 @@ export default {
         .then((res) => res.json())
         .then((data) => {
           if (data.Success) {
+            toast.$success(data.Message);
+          } else {
+            toast.$failure(data.Message);
           }
         });
     },

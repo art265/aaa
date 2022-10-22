@@ -125,10 +125,10 @@ export default {
   },
 
   mounted() {
-    Toast.$success("Welcome to the dashboard", 1000);
     Toast.$failure("Welcome to the dashboard", 1000);
     Toast.$warning("Welcome to the dashboard", 1000);
     Toast.$info("Welcome to the dashboard", 1000);
+    Toast.$success("Welcome to the dashboard", 1000);
   },
 };
 </script>

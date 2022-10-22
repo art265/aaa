@@ -200,7 +200,7 @@ class Utils {
   }
 
   loadThemeScrollBar() {
-    const themes = this.getThemeColors();
+    const themes: any = this.getThemeColors();
     let theme = themes[this.getTheme()];
     let hex = `#${theme}`;
     let code = `
