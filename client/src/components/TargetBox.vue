@@ -1,6 +1,6 @@
-<script>
-import Node from "../assets/imgs/node.png";
+<script lang="ts">
 import Python from "../assets/imgs/python.png";
+import Node from "../assets/imgs/node.png";
 
 export default {
   components: { Python, Node },
@@ -21,7 +21,7 @@ export default {
       required: true,
     },
 
-    Type: "Node" | "Python",
+    Type: String,
   },
 
   data() {

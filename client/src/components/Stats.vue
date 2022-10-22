@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 export default {
   props: {
-    value: Number,
+    value: String,
     percentage: Number,
     length: Number,
     label: String,

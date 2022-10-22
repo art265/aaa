@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 export default {
   props: {
     directories: {
@@ -13,7 +13,7 @@ export default {
       return this.DarkColor == true ? "bg-steel-300" : "bg-steel-200";
     },
 
-    ByteSizeFormatter(bytes) {
+    ByteSizeFormatter(bytes: number) {
       if (bytes == 0) return "0 Bytes";
       var k = 1024,
         dm = 2,
@@ -49,7 +49,7 @@ export default {
           <tbody>
             <tr
               :class="`${ColorToClass()} border-b border-steel-400`"
-              v-for="dir in directories"
+              v-for="dir in (directories as any)"
               :key="dir"
             >
               <th

@@ -1,7 +1,8 @@
+import Toasted from "vue-toasted";
+
 import App from "./App.vue";
 import router from "./router";
 import utils from "./assets/js/utils";
-import Toaster from "@meforma/vue-toaster";
 
 import "@/assets/scss/index.scss";
 import "@/assets/scss/tailwinds.scss";

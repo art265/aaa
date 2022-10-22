@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import ToggleButton from "../ToggleButton.vue";
 import FileManager from "../FileManager.vue";
 import config from "../../config";
@@ -9,13 +9,13 @@ export default {
   data() {
     return {
       Instance: {
+        id: "",
         name: "",
         app_type: "",
         target_file: "",
         AutoRestart: false,
         InstanceRunning: true,
         full_path: "",
-        id: "",
         files: [],
       },
       localStorage: localStorage,

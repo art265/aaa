@@ -4,6 +4,7 @@ import Toast from "./toast/index";
 import utils from "@/assets/js/utils";
 import Stats from "@/components/Stats.vue";
 import NewChart from "@/components/NewChart.vue";
+import Toasted from "vue-toasted";
 
 Chart.register(...registerables);
 const Colors = utils.getThemeColors();
@@ -124,10 +125,10 @@ export default {
     };
   },
   mounted() {
-    Toast.$fire({
-      Message: "Hi",
-      Success: true,
-      Show: true,
+    const Modal = Toast.$fire({
+      Timeout: 1000,
+      Type: "Success",
+      Message: "Welcome to the dashboard",
     });
   },
 };
@@ -137,8 +138,8 @@ export default {
   <main class="">
     <section class="py-5">
       <div class="grid grid-cols-2 gap-5 w-full">
-        <Stats percentage="100" value="1/10" length="10" label="Instances" />
-        <Stats percentage="100" value="1/5" length="20" label="Webhooks" />
+        <Stats :percentage="100" value="1/10" :length="10" label="Instances" />
+        <Stats :percentage="100" value="1/5" :length="20" label="Webhooks" />
       </div>
     </section>
     <section class="">

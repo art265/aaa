@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { Chart, registerables } from "chart.js";
 import utils from "@/assets/js/utils";
 
@@ -16,12 +16,12 @@ export default {
     type: String,
     options: Object,
     data: {
-      labels: String | Array,
+      labels: [],
       datasets: [
         {
           backgroundColor: String,
-          label: String | Array,
-          data: Object | Array,
+          label: String,
+          data: Object,
           borderColor: String,
           borderWidth: 1,
         },
@@ -30,13 +30,13 @@ export default {
   },
 
   mounted() {
-    const Options = this.options;
-    const Data = this.data;
+    const Options = (this as any).options;
+    const Data = (this as any).data;
 
-    let ctx = document.getElementById(this.id);
+    let ctx: any = document.getElementById((this as any).id);
     const chart = new Chart(ctx, {
       data: Data,
-      type: this.type,
+      type: (this as any).type,
       options: Options,
     });
   },

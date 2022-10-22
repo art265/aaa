@@ -1,5 +1,5 @@
 class Utils {
-  hexToRgb(hex, alpha) {
+  hexToRgb(hex: string, alpha: number) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     if (result) {
       return `rgba(${parseInt(result[1], 16)}, ${parseInt(
@@ -20,16 +20,16 @@ class Utils {
     return result;
   }
 
-  appendJs(links) {
-    links.forEach((link) => {
+  appendJs(links: any[]) {
+    links.forEach((link: string) => {
       let tag = document.createElement("script");
       tag.setAttribute("src", link);
       document.body.appendChild(tag);
     });
   }
 
-  appendCss(links) {
-    links.forEach((link) => {
+  appendCss(links: any[]) {
+    links.forEach((link: string) => {
       let tag = document.createElement("link");
       tag.setAttribute("href", link);
       tag.setAttribute("rel", "stylesheet");
@@ -37,7 +37,7 @@ class Utils {
     });
   }
 
-  fakeDatasetsArray(length = 25, min, max) {
+  fakeDatasetsArray(length = 25, min: number, max: number) {
     let data = [];
     for (let i = 0; i < length; i++) {
       data.push(Math.floor(min + Math.random() * (max - min + 1)));
@@ -63,7 +63,7 @@ class Utils {
     return data;
   }
 
-  setDefaultTheme(theme) {
+  setDefaultTheme(theme: string) {
     if (localStorage.theme == null) {
       localStorage.theme = theme;
       window.location.reload();
@@ -89,7 +89,7 @@ class Utils {
     };
   }
 
-  changeHue(rgb, degree) {
+  changeHue(rgb: any, degree: number) {
     var hsl = this.rgbToHSL(rgb);
     hsl.h += degree;
     if (hsl.h > 360) {
@@ -100,7 +100,7 @@ class Utils {
     return this.hslToRGB(hsl);
   }
 
-  rgbToHSL(rgb) {
+  rgbToHSL(rgb: string) {
     // strip the leading # if it's there
     rgb = (rgb || "").replace(/^\s*#|\s*$/g, "");
 
@@ -143,7 +143,7 @@ class Utils {
   }
 
   // expects an object and returns a string
-  hslToRGB(hsl) {
+  hslToRGB(hsl: { h: any; s: any; l: any }) {
     var h = hsl.h,
       s = hsl.s,
       l = hsl.l,
@@ -187,7 +187,7 @@ class Utils {
     return this.rgbToHex(r, g, b);
   }
 
-  normalize_rgb_value(color, m) {
+  normalize_rgb_value(color: number, m: number) {
     color = Math.floor((color + m) * 255);
     if (color < 0) {
       color = 0;
@@ -195,12 +195,13 @@ class Utils {
     return color;
   }
 
-  rgbToHex(r, g, b) {
+  rgbToHex(r: number, g: number, b: number) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
 
   loadThemeScrollBar() {
-    let theme = this.getThemeColors()[this.getTheme()];
+    const themes = this.getThemeColors();
+    let theme = themes[this.getTheme()];
     let hex = `#${theme}`;
     let code = `
 ::-webkit-scrollbar-thumb {
