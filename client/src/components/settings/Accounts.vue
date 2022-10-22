@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import Account from "@/components/settings/AccountBox.vue";
 import CreateAccount from "@/components/screen/CreateAccount.vue";
 import Config from "../../config";
@@ -13,21 +13,27 @@ export default {
     };
   },
 
-  mounted() {
-    fetch(`${Config.server}/users/list`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        token: localStorage.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        this.users = data.Data || [];
+  methods: {
+    FetchAccounts() {
+      fetch(`${Config.server}/users/list`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
       })
-      .catch((err) => {
-        throw err;
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          this.users = data.Data || [];
+        })
+        .catch((err) => {
+          throw err;
+        });
+    },
+  },
+
+  mounted() {
+    this.FetchAccounts();
   },
 };
 </script>
@@ -64,11 +70,12 @@ export default {
 
       <div class="grid grid-cols-4 gap-5 w-full">
         <Account
-          v-for="user in users"
+          v-for="user in (users as any)"
           :key="user"
           :accountId="user.id"
           :isAdmin="user.isAdmin"
           :username="user.username"
+          :onDelete="FetchAccounts"
         ></Account>
       </div>
     </section>

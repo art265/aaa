@@ -23,25 +23,26 @@ export default {
   },
 
   methods: {
-    Create() {},
+    FetchMyInstances() {
+      fetch(`${Config.server}/instances/by/me`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.instances = data.Data || [];
+        })
+        .catch((err) => {
+          throw err;
+        });
+    },
   },
 
   mounted() {
-    // Fetch Json
-    fetch(`${Config.server}/instances/by/me`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        token: localStorage.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        this.instances = data.Data || [];
-      })
-      .catch((err) => {
-        throw err;
-      });
+    this.FetchMyInstances();
   },
 };
 </script>
@@ -89,6 +90,7 @@ export default {
           </section>
         </section>
         <CreateInstance
+          :onCreated="FetchMyInstances"
           :Visible="VisibleDisplay"
           :onCrossed="
             () => {

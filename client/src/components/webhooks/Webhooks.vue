@@ -1,31 +1,17 @@
 <script lang="ts">
 import CreateWebhook from "@/components/screen/CreateWebhook.vue";
-import Toast from "../screen/Toast.vue";
 import Box from "./WebhookBox.vue";
 import config from "../../config";
+import toast from "../toast";
 
 export default {
-  components: { Box, CreateWebhook, Toast },
+  components: { Box, CreateWebhook },
 
   data() {
     return {
       webhooks: [],
       localStorage: localStorage,
       VisibleDisplay: false,
-      Toast: {
-        Message: "",
-        Show: false,
-        Success: false,
-        Fire(message: string, success: boolean, timeout = 3000) {
-          this.Message = message;
-          this.Success = success;
-          this.Show = true;
-
-          setTimeout(() => {
-            this.Show = false;
-          }, timeout);
-        },
-      },
     };
   },
 
@@ -64,18 +50,16 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          this.Toast.Fire(data.Message, data.Success);
           if (data.Success) {
+            toast.$success(data.Message);
             this.FetchMyWebhooks();
+          } else {
+            toast.$failure(data.Message);
           }
         })
         .catch((err) => {
           throw err;
         });
-    },
-
-    FireToast: function (message: string, success: boolean, timeout = 3000) {
-      this.Toast.Fire(message, success, timeout);
     },
   },
 };
@@ -83,11 +67,6 @@ export default {
 
 <template>
   <main class="">
-    <Toast
-      :Show="Toast.Show"
-      :Success="Toast.Success"
-      :Message="Toast.Message"
-    />
     <section class="mt-5">
       <div class="grid grid-cols-1 gap-5 w-full">
         <div class="grid grid-cols-2 items-center">
@@ -105,6 +84,7 @@ export default {
             </button>
             <div>
               <CreateWebhook
+                :reFetchWebhooks="FetchMyWebhooks"
                 :Visible="VisibleDisplay"
                 :onCrossed="
                   () => {

@@ -1,6 +1,7 @@
 <script lang="ts">
 import ManageAccount from "@/components/screen/ManageAccount.vue";
 import config from "@/config";
+import toast from "../toast";
 
 export default {
   components: { ManageAccount },
@@ -20,6 +21,11 @@ export default {
       type: String,
       required: true,
     },
+
+    onDelete: {
+      type: Function,
+      required: true,
+    },
   },
 
   methods: {
@@ -37,8 +43,12 @@ export default {
         .then((res) => res.json())
         .then((data) => {
           if (data.Success) {
-            window.location.reload();
+            toast.$success(data.Message);
+          } else {
+            toast.$failure(data.Message);
           }
+
+          this.onDelete();
         })
         .catch((err) => {
           throw err;

@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 import config from "../../config";
-import Toast from "./Toast.vue";
+import toast from "../toast";
 
 export default {
-  components: { Toast },
+  components: {},
 
   props: {
     Visible: {
@@ -14,26 +14,17 @@ export default {
       type: Function,
       required: true,
     },
+
+    reFetchWebhooks: {
+      type: Function,
+      required: true,
+    },
   },
 
   data() {
     return {
       webhook_url: "",
       localStorage: localStorage,
-      Toast: {
-        Message: "",
-        Show: false,
-        Success: false,
-        Fire(message, success, timeout = 3000) {
-          this.Message = message;
-          this.Success = success;
-          this.Show = true;
-
-          setTimeout(() => {
-            this.Show = false;
-          }, timeout);
-        },
-      },
     };
   },
 
@@ -51,9 +42,13 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(this);
-          console.log(this.Toast);
-          this.Toast.Fire(data.Message, data.Success, 3000);
+          if (data.Success) {
+            toast.$success(data.Message);
+            this.reFetchWebhooks();
+            this.onCrossed();
+          } else {
+            toast.$failure(data.Message);
+          }
         })
         .catch((err) => {
           throw err;
@@ -70,11 +65,6 @@ export default {
     aria-hidden="true"
     class="overflow-y-auto flex flex-wrap justify-center mt-20 overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
   >
-    <Toast
-      :Show="Toast.Show"
-      :Success="Toast.Success"
-      :Message="Toast.Message"
-    />
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
       <div class="relative bg-steel-400 rounded-lg shadow">
         <div
@@ -85,7 +75,11 @@ export default {
           </h3>
           <button
             type="button"
-            v-on:click="onCrossed"
+            v-on:click="
+              () => {
+                onCrossed;
+              }
+            "
             class="text-gray-400 bg-transparent hover:bg-steel-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
           >
             <svg
@@ -110,7 +104,9 @@ export default {
           <input
             type="text"
             :value="webhook_url"
-            @input="webhook_url = $event.target.value"
+            @input="(e)=>{
+              webhook_url = (e.target as HTMLInputElement).value
+            }"
             :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
             placeholder="https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxx"
           />
@@ -125,7 +121,11 @@ export default {
           </button>
           <button
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-8 py-3 bg-steel-300`"
-            v-on:click="onCrossed"
+            v-on:click="
+              () => {
+                onCrossed;
+              }
+            "
           >
             Never mind
           </button>

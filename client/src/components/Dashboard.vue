@@ -1,10 +1,9 @@
 <script lang="ts">
-import { Chart, registerables } from "chart.js";
 import Toast from "./toast/index";
 import utils from "@/assets/js/utils";
 import Stats from "@/components/Stats.vue";
+import { Chart, registerables } from "chart.js";
 import NewChart from "@/components/NewChart.vue";
-import Toasted from "vue-toasted";
 
 Chart.register(...registerables);
 const Colors = utils.getThemeColors();
@@ -124,12 +123,12 @@ export default {
       },
     };
   },
+
   mounted() {
-    const Modal = Toast.$fire({
-      Timeout: 1000,
-      Type: "Success",
-      Message: "Welcome to the dashboard",
-    });
+    Toast.$success("Welcome to the dashboard", 1000);
+    Toast.$failure("Welcome to the dashboard", 1000);
+    Toast.$warning("Welcome to the dashboard", 1000);
+    Toast.$info("Welcome to the dashboard", 1000);
   },
 };
 </script>

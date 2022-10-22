@@ -1,5 +1,6 @@
 <script lang="ts">
 import config from "../../config";
+import toast from "../toast";
 import ToggleButton from "../ToggleButton.vue";
 
 export default {
@@ -36,7 +37,12 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          window.location.reload();
+          if (data.Success) {
+            toast.$success(data.Message);
+            this.onCrossed();
+          } else {
+            toast.$failure(data.Message);
+          }
         })
         .catch((err) => {
           throw err;

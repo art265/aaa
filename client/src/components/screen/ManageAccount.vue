@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import ToggleButton from "@/components/ToggleButton.vue";
 
 export default {
@@ -40,8 +40,12 @@ export default {
           <h3 class="text-xl font-semibold text-white">Manage Account</h3>
           <button
             type="button"
-            v-on:click="onCrossed"
             class="text-gray-400 bg-transparent hover:bg-steel-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            v-on:click="
+              () => {
+                onCrossed();
+              }
+            "
           >
             <svg
               aria-hidden="true"
@@ -71,22 +75,6 @@ export default {
                 :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
               />
             </div>
-            <!-- <div>
-              <label for="">Password</label>  
-              <input
-                type="password"
-                placeholder="******"
-                :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
-              />
-            </div>
-            <div>
-              <label for="">Email</label>
-              <input
-                type="email"
-                placeholder="johndoe@gmail.com"
-                :class="`w-full py-3 px-5 text-gray-300 bg-steel-300 rounded-lg`"
-              />
-            </div> -->
           </div>
         </div>
         <div class="grid-cols-5 grid gap-3 px-6 mt-3 items-center">
@@ -120,7 +108,11 @@ export default {
           </button>
           <button
             :class="`rounded-lg float-right w-full lg:w-auto lg:px-8 py-3 bg-steel-300`"
-            v-on:click="onCrossed"
+            v-on:click="
+              () => {
+                onCrossed();
+              }
+            "
           >
             Close
           </button>

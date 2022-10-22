@@ -1,6 +1,7 @@
 <script lang="ts">
 import ToggleButton from "@/components/ToggleButton.vue";
 import config from "../../config";
+import toast from "../toast";
 
 export default {
   data() {
@@ -20,6 +21,11 @@ export default {
   components: { ToggleButton },
 
   props: {
+    onCreated: {
+      type: Function,
+      required: true,
+    },
+
     Visible: {
       type: Boolean,
       required: true,
@@ -54,8 +60,13 @@ export default {
         .then((res) => res.json())
         .then((data) => {
           if (data.Success) {
-            window.location.reload();
+            toast.$success(data.Message);
+            this.onCrossed();
+          } else {
+            toast.$failure(data.Message);
           }
+
+          this.onCreated();
         })
         .catch((err) => {
           throw err;
